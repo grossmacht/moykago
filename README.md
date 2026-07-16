@@ -52,9 +52,24 @@ bin/rails server -b 0.0.0.0 -p 3111
 Seed'da 12 ta namunaviy Toshkent moykasi, 46 xizmat va sharhlar bor —
 haqiqiy moykalar ulanganida admin paneldan kiritiladi.
 
+## Telegram-bot
+
+Sayt bilan **bitta bazada** ishlaydi: botdan qilingan bron moyka egasi panelida
+va admin panelda darhol ko'rinadi.
+
+Bot oqimi: `/start` → 🚿 Moyka topish → tuman → moyka → xizmat → sana → soat →
+telefon (kontakt tugmasi) → ✅ bron kodi. «📋 Bronlarim» — ko'rish va bekor qilish.
+
+**Ishga tushirish:**
+1. Telegram'da [@BotFather](https://t.me/BotFather) → `/newbot` → token oling
+2. Tokenni saqlang: `echo "TOKEN" > config/telegram_token` (git'ga tushmaydi)
+3. `bin/rails bot:run`
+
+Token'siz sinash: `bin/rails runner script/bot_simulation.rb` — to'liq suhbatni
+taqlid qilib, 13 ta tekshiruv o'tkazadi.
+
 ## Keyingi qadamlar (rejaga muvofiq)
 
 1. Payme/Click onlayn to'lov integratsiyasi
 2. SMS orqali bron tasdig'i (Eskiz.uz yoki Play Mobile)
-3. Telegram-bot (past to'siqli kirish kanali)
-4. Obuna paketlari va B2B modul (2–3-bosqich)
+3. Obuna paketlari va B2B modul (2–3-bosqich)

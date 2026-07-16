@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_15_143422) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_16_083620) do
   create_table "bookings", force: :cascade do |t|
     t.string "car_model"
     t.string "code"
@@ -21,13 +21,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_15_143422) do
     t.integer "service_id", null: false
     t.string "slot"
     t.integer "status", default: 0, null: false
+    t.bigint "telegram_chat_id"
     t.datetime "updated_at", null: false
     t.integer "wash_id", null: false
     t.index ["code"], name: "index_bookings_on_code", unique: true
     t.index ["customer_phone"], name: "index_bookings_on_customer_phone"
     t.index ["service_id"], name: "index_bookings_on_service_id"
+    t.index ["telegram_chat_id"], name: "index_bookings_on_telegram_chat_id"
     t.index ["wash_id", "date", "slot"], name: "index_bookings_on_wash_id_and_date_and_slot"
     t.index ["wash_id"], name: "index_bookings_on_wash_id"
+  end
+
+  create_table "bot_sessions", force: :cascade do |t|
+    t.bigint "chat_id", null: false
+    t.datetime "created_at", null: false
+    t.text "payload"
+    t.string "step", default: "idle", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_bot_sessions_on_chat_id", unique: true
   end
 
   create_table "reviews", force: :cascade do |t|
