@@ -1,0 +1,35 @@
+<% content_for :title, "Xizmatlar — Panel" %>
+<section class="section">
+  <div class="container">
+    <%= render "panel/nav" %>
+    <h1>Xizmatlar va narxlar</h1>
+
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Xizmat</th><th>Narx</th><th>Davomiylik</th><th></th></tr></thead>
+        <tbody>
+          <% @services.each do |s| %>
+            <tr>
+              <td><%= s.name %></td>
+              <td><%= som(s.price) %></td>
+              <td><%= s.duration_minutes %> daqiqa</td>
+              <td class="table__actions">
+                <%= link_to "Tahrirlash", edit_panel_service_path(s), class: "btn btn--sm btn--ghost" %>
+                <%= button_to "O'chirish", panel_service_path(s), method: :delete, class: "btn btn--sm btn--danger",
+                      data: { turbo_confirm: "Xizmat o'chirilsinmi?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="section__title">Yangi xizmat qo'shish</h2>
+    <%= form_with model: @service, url: panel_services_path, class: "inline-form" do |f| %>
+      <label>Nomi <%= f.text_field :name, required: true, placeholder: "Standart yuvish" %></label>
+      <label>Narx (so'm) <%= f.number_field :price, required: true, min: 1000, step: 1000 %></label>
+      <label>Davomiylik (daqiqa) <%= f.number_field :duration_minutes, required: true, min: 5, value: 40 %></label>
+      <button type="submit" class="btn btn--primary">Qo'shish</button>
+    <% end %>
+  </div>
+</section>

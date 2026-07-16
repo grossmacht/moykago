@@ -1,0 +1,32 @@
+<% content_for :title, "Admin — MoykaGo" %>
+<section class="section">
+  <div class="container">
+    <%= render "admin/nav" %>
+    <h1>Ko'rsatkichlar</h1>
+
+    <div class="stats">
+      <div class="stat"><p class="stat__n"><%= @wash_count %></p><p class="stat__l">Faol moykalar</p></div>
+      <div class="stat"><p class="stat__n"><%= @today_count %></p><p class="stat__l">Bugungi bronlar</p></div>
+      <div class="stat"><p class="stat__n"><%= @month_count %></p><p class="stat__l">Shu oy bronlar</p></div>
+      <div class="stat"><p class="stat__n"><%= som(@month_gmv) %></p><p class="stat__l">Shu oy GMV</p></div>
+    </div>
+
+    <h2 class="section__title">So'nggi bronlar</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Kod</th><th>Moyka</th><th>Mijoz</th><th>Sana</th><th>Holat</th></tr></thead>
+        <tbody>
+          <% @recent.each do |b| %>
+            <tr>
+              <td><%= b.code %></td>
+              <td><%= b.wash.name %></td>
+              <td><%= b.customer_name %></td>
+              <td><%= uz_date(b.date) %>, <%= b.slot %></td>
+              <td><%= status_badge(b) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

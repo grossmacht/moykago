@@ -1,0 +1,13 @@
+<%= link_to wash_path(wash), class: "card" do %>
+  <div class="card__visual" data-hue="<%= wash.id % 4 %>">
+    <span class="card__initial"><%= wash.name.first %></span>
+  </div>
+  <div class="card__body">
+    <h3 class="card__name"><%= wash.name %></h3>
+    <p class="card__meta"><%= wash.district %> · <%= wash.work_hours %></p>
+    <div class="card__foot">
+      <%= droplets(wash.rating, count: wash.reviews.size) %>
+      <span class="card__price"><%= wash.price_from ? "#{som(wash.price_from)} dan" : "" %></span>
+    </div>
+  </div>
+<% end %>

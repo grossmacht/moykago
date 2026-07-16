@@ -1,0 +1,71 @@
+<section class="hero">
+  <div class="container hero__inner">
+    <p class="hero__eyebrow">Toshkent bo'ylab <%= @wash_count %> ta moyka</p>
+    <h1>Mashinangiz <span class="hero__accent">yaltirasin</span>.<br>Navbatsiz.</h1>
+    <p class="hero__sub">Yaqiningizdagi avtomoykani tanlang, qulay vaqtga bron qiling — kelganingizda joy tayyor bo'ladi.</p>
+    <%= form_with url: washes_path, method: :get, class: "hero__search" do %>
+      <select name="district" aria-label="Tuman">
+        <option value="">Barcha tumanlar</option>
+        <% Wash::DISTRICTS.each do |d| %>
+          <option value="<%= d %>"><%= d %></option>
+        <% end %>
+      </select>
+      <button type="submit" class="btn btn--accent">Moyka topish</button>
+    <% end %>
+    <div class="hero__bubbles" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+  <div class="wave" aria-hidden="true"></div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section__title">Qanday ishlaydi?</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step__icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3>Toping</h3>
+        <p>Tumaningizdagi moykalarni narx va reyting bo'yicha solishtiring.</p>
+      </div>
+      <div class="step">
+        <div class="step__icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>Bron qiling</h3>
+        <p>Xizmat va qulay vaqtni tanlang — bir daqiqada, ro'yxatdan o'tmasdan.</p>
+      </div>
+      <div class="step">
+        <div class="step__icon"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.6L20 10l-5.6 1.9L12 17l-1.9-5.1L4 10l6.1-1.4L12 3z"/><path d="M19 16l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7.7-2z"/></svg></div>
+        <h3>Keling</h3>
+        <p>Belgilangan vaqtda keling, navbatsiz yuviladi. To'lov joyida.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--tint">
+  <div class="container">
+    <div class="section__head">
+      <h2 class="section__title">Tanlangan moykalar</h2>
+      <%= link_to "Hammasi →", washes_path, class: "section__more" %>
+    </div>
+    <div class="cards">
+      <%= render partial: "washes/card", collection: @featured, as: :wash %>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section__title">Tumanlar bo'yicha</h2>
+    <div class="chips">
+      <% Wash::DISTRICTS.each do |d| %>
+        <% n = @district_counts[d].to_i %>
+        <% if n.positive? %>
+          <%= link_to washes_path(district: d), class: "chip" do %>
+            <%= d %> <span class="chip__n"><%= n %></span>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</section>

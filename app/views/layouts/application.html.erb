@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <title><%= content_for(:title) || "MoykaGo — Toshkentda avtomoyka bron qilish" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Toshkentdagi eng yaqin avtomoykani toping, vaqtni tanlang va navbatsiz keling. MoykaGo — avtomoyka bron qilish xizmati.">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2C12 2 5 10.5 5 15a7 7 0 0 0 14 0c0-4.5-7-13-7-13z' fill='%230891B2'/></svg>">
+    <%= stylesheet_link_tag :app %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="container site-header__row">
+        <%= link_to root_path, class: "logo" do %>
+          <span class="logo__drop"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2C12 2 5 10.5 5 15a7 7 0 0 0 14 0c0-4.5-7-13-7-13z" fill="currentColor"/></svg></span>
+          Moyka<em>Go</em>
+        <% end %>
+        <nav class="site-nav">
+          <%= link_to "Moykalar", washes_path %>
+          <%= link_to "Bronlarim", lookup_path %>
+          <% if current_user %>
+            <% if current_user.admin? %>
+              <%= link_to "Admin", admin_root_path, class: "site-nav__panel" %>
+            <% elsif current_user.wash %>
+              <%= link_to "Panel", panel_bookings_path, class: "site-nav__panel" %>
+            <% end %>
+          <% else %>
+            <%= link_to "Kirish", panel_login_path, class: "site-nav__login" %>
+          <% end %>
+        </nav>
+      </div>
+    </header>
+
+    <% if flash[:notice] %>
+      <div class="container"><div class="flash flash--ok"><%= flash[:notice] %></div></div>
+    <% end %>
+    <% if flash[:alert] %>
+      <div class="container"><div class="flash flash--err"><%= flash[:alert] %></div></div>
+    <% end %>
+
+    <main>
+      <%= yield %>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p class="site-footer__brand">Moyka<em>Go</em></p>
+        <p>Toshkent avtomoykalarini bir joyda toping va bron qiling.</p>
+        <p class="site-footer__note">To'lov hozircha joyida — naqd yoki karta orqali. Onlayn to'lov (Payme / Click) tez orada.</p>
+      </div>
+    </footer>
+  </body>
+</html>

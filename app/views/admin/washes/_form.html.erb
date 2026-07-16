@@ -1,0 +1,26 @@
+<%= form_with model: [ :admin, @wash ], class: "login-form" do |f| %>
+  <% if @wash.errors.any? %>
+    <div class="flash flash--err"><%= @wash.errors.full_messages.to_sentence %></div>
+  <% end %>
+  <label>Nomi <%= f.text_field :name, required: true %></label>
+  <label>Tuman <%= f.select :district, Wash::DISTRICTS %></label>
+  <label>Manzil <%= f.text_field :address, required: true %></label>
+  <label>Telefon <%= f.telephone_field :phone %></label>
+  <label>Tavsif <%= f.text_area :description, rows: 3 %></label>
+  <div class="form-grid form-grid--3">
+    <label>Ochilish <%= f.number_field :open_hour, min: 0, max: 23 %></label>
+    <label>Yopilish <%= f.number_field :close_hour, min: 1, max: 24 %></label>
+    <label>Postlar <%= f.number_field :bays, min: 1, max: 20 %></label>
+  </div>
+  <label class="check-label"><%= f.check_box :featured %> Bosh sahifada ko'rsatilsin</label>
+
+  <h2 class="section__title">Moyka egasi (kirish huquqi)</h2>
+  <p class="hint">To'ldirsangiz, shu telefon-parol bilan moyka paneliga kirish ochiladi.</p>
+  <div class="form-grid">
+    <label>Telefon <input type="tel" name="owner[phone]" value=""></label>
+    <label>Parol <input type="text" name="owner[password]" value=""></label>
+  </div>
+
+  <button type="submit" class="btn btn--primary btn--big">Saqlash</button>
+  <%= link_to "Orqaga", admin_washes_path, class: "btn btn--ghost" %>
+<% end %>

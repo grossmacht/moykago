@@ -1,0 +1,22 @@
+<% content_for :title, "Moyka ma'lumotlari — Panel" %>
+<section class="section">
+  <div class="container container--narrow">
+    <%= render "panel/nav" %>
+    <h1>Moyka ma'lumotlari</h1>
+    <%= form_with model: @wash, url: panel_wash_path, class: "login-form" do |f| %>
+      <label>Nomi <%= f.text_field :name, required: true %></label>
+      <label>Tuman
+        <%= f.select :district, Wash::DISTRICTS %>
+      </label>
+      <label>Manzil <%= f.text_field :address, required: true %></label>
+      <label>Telefon <%= f.telephone_field :phone %></label>
+      <label>Tavsif <%= f.text_area :description, rows: 3 %></label>
+      <div class="form-grid form-grid--3">
+        <label>Ochilish (soat) <%= f.number_field :open_hour, min: 0, max: 23 %></label>
+        <label>Yopilish (soat) <%= f.number_field :close_hour, min: 1, max: 24 %></label>
+        <label>Postlar soni <%= f.number_field :bays, min: 1, max: 20 %></label>
+      </div>
+      <button type="submit" class="btn btn--primary">Saqlash</button>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+<% content_for :title, "Bronlar — Panel" %>
+<section class="section">
+  <div class="container">
+    <%= render "panel/nav" %>
+    <h1>Bronlar — <%= uz_date(@date) %></h1>
+
+    <div class="date-row">
+      <% (-1..5).each do |i| %>
+        <% d = Date.current + i %>
+        <%= link_to panel_bookings_path(date: d),
+              class: "date-pill #{'date-pill--on' if d == @date}" do %>
+          <span class="date-pill__dow"><%= i == 0 ? "Bugun" : %w[Yak Du Se Chor Pay Ju Shan][d.wday] %></span>
+          <span class="date-pill__d"><%= d.day %></span>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if @bookings.any? %>
+      <div class="table-wrap">
+        <table class="table">
+          <thead>
+            <tr><th>Vaqt</th><th>Kod</th><th>Mijoz</th><th>Xizmat</th><th>Holat</th><th>Amal</th></tr>
+          </thead>
+          <tbody>
+            <% @bookings.each do |b| %>
+              <tr>
+                <td><strong><%= b.slot %></strong></td>
+                <td><%= b.code %></td>
+                <td><%= b.customer_name %><br><a href="tel:<%= b.customer_phone %>"><%= b.customer_phone %></a>
+                  <% if b.car_model.present? %><br><small><%= b.car_model %></small><% end %></td>
+                <td><%= b.service.name %><br><small><%= som(b.service.price) %></small></td>
+                <td><%= status_badge(b) %></td>
+                <td class="table__actions">
+                  <% if b.yangi? %>
+                    <%= button_to "Tasdiqlash", panel_booking_path(b, status: "tasdiqlandi"), method: :patch, class: "btn btn--sm btn--primary" %>
+                  <% end %>
+                  <% if b.yangi? || b.tasdiqlandi? %>
+                    <%= button_to "Bajarildi", panel_booking_path(b, status: "bajarildi"), method: :patch, class: "btn btn--sm btn--ok" %>
+                    <%= button_to "Bekor", panel_booking_path(b, status: "bekor"), method: :patch, class: "btn btn--sm btn--danger",
+                          data: { turbo_confirm: "Bron bekor qilinsinmi?" } %>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <div class="empty"><p>Bu kunga bron yo'q.</p></div>
+    <% end %>
+  </div>
+</section>

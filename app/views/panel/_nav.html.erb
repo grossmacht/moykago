@@ -1,0 +1,9 @@
+<div class="panel-nav">
+  <span class="panel-nav__wash"><%= @wash.name %></span>
+  <nav>
+    <%= link_to "Bronlar", panel_bookings_path, class: ("on" if controller_name == "bookings") %>
+    <%= link_to "Xizmatlar", panel_services_path, class: ("on" if controller_name == "services") %>
+    <%= link_to "Moyka ma'lumotlari", edit_panel_wash_path, class: ("on" if controller_name == "washes") %>
+    <%= button_to "Chiqish", panel_logout_path, method: :delete, class: "linklike" %>
+  </nav>
+</div>

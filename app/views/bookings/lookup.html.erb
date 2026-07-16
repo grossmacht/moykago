@@ -1,0 +1,32 @@
+<% content_for :title, "Bronlarim — MoykaGo" %>
+<section class="section">
+  <div class="container container--narrow">
+    <h1>Bronlarim</h1>
+    <p class="hint">Bron qilishda ko'rsatgan telefon raqamingizni kiriting.</p>
+    <%= form_with url: lookup_path, method: :get, class: "lookup-form" do %>
+      <input type="tel" name="phone" value="<%= params[:phone] %>" placeholder="+998 90 123 45 67" required>
+      <button type="submit" class="btn btn--primary">Qidirish</button>
+    <% end %>
+
+    <% if @bookings %>
+      <% if @bookings.any? %>
+        <div class="booking-list">
+          <% @bookings.each do |b| %>
+            <%= link_to booking_status_path(b.code), class: "booking-item" do %>
+              <div>
+                <strong><%= b.wash.name %></strong>
+                <p><%= b.service.name %> · <%= uz_date(b.date) %>, <%= b.slot %></p>
+              </div>
+              <%= status_badge(b) %>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="empty">
+          <p>Bu raqamda bron topilmadi.</p>
+          <%= link_to "Moyka tanlash", washes_path, class: "btn btn--accent" %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+<% content_for :title, "Bronlar — Admin" %>
+<section class="section">
+  <div class="container">
+    <%= render "admin/nav" %>
+    <h1>Barcha bronlar</h1>
+    <div class="chips">
+      <%= link_to "Hammasi", admin_bookings_path, class: "chip #{'chip--on' unless @status}" %>
+      <% Booking::STATUS_LABELS.each do |key, label| %>
+        <%= link_to label, admin_bookings_path(status: key), class: "chip #{'chip--on' if @status == key}" %>
+      <% end %>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Kod</th><th>Moyka</th><th>Mijoz</th><th>Xizmat</th><th>Sana</th><th>Holat</th></tr></thead>
+        <tbody>
+          <% @bookings.each do |b| %>
+            <tr>
+              <td><%= b.code %></td>
+              <td><%= b.wash.name %></td>
+              <td><%= b.customer_name %><br><small><%= b.customer_phone %></small></td>
+              <td><%= b.service.name %></td>
+              <td><%= uz_date(b.date) %>, <%= b.slot %></td>
+              <td><%= status_badge(b) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+<% content_for :title, "Moykalar — Admin" %>
+<section class="section">
+  <div class="container">
+    <%= render "admin/nav" %>
+    <div class="section__head">
+      <h1>Moykalar</h1>
+      <%= link_to "+ Yangi moyka", new_admin_wash_path, class: "btn btn--accent" %>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Nomi</th><th>Tuman</th><th>Egasi</th><th>Bronlar</th><th></th></tr></thead>
+        <tbody>
+          <% @washes.each do |w| %>
+            <tr>
+              <td><%= link_to w.name, wash_path(w) %><% if w.featured? %> ⭐<% end %></td>
+              <td><%= w.district %></td>
+              <td><%= w.users.map(&:phone).join(", ").presence || "—" %></td>
+              <td><%= w.bookings.size %></td>
+              <td class="table__actions">
+                <%= link_to "Tahrirlash", edit_admin_wash_path(w), class: "btn btn--sm btn--ghost" %>
+                <%= button_to "O'chirish", admin_wash_path(w), method: :delete, class: "btn btn--sm btn--danger",
+                      data: { turbo_confirm: "#{w.name} va uning barcha bronlari o'chirilsinmi?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
