@@ -265,7 +265,9 @@ module Bot
     end
 
     def send_text(chat_id, text, reply_markup: nil)
-      @api.send_message(chat_id: chat_id, text: text, reply_markup: reply_markup)
+      # Telegram klaviaturani JSON-satr ko'rinishida kutadi
+      markup = reply_markup.is_a?(Hash) ? reply_markup.to_json : reply_markup
+      @api.send_message(chat_id: chat_id, text: text, reply_markup: markup)
     end
 
     def answer(cb)

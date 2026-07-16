@@ -15,6 +15,7 @@ class FakeApi
   def last = @sent.last
   def last_buttons
     kb = last[:reply_markup]
+    kb = JSON.parse(kb, symbolize_names: true) if kb.is_a?(String)
     kb.is_a?(Hash) && kb[:inline_keyboard] ? kb[:inline_keyboard].flatten : []
   end
 end
