@@ -87,8 +87,21 @@ COMMENTS_MID = [
   "Sifat yaxshi, faqat ichki tozalash tezroq bo'lsa bo'lardi."
 ]
 
+# Tumanlar markazining taxminiy koordinatasi (aniq geodeziya emas, yo'nalish uchun yetarli)
+DISTRICT_COORDS = {
+  "Chilonzor" => [ 41.2856, 69.2034 ], "Yunusobod" => [ 41.3608, 69.2879 ],
+  "Mirzo Ulug'bek" => [ 41.3378, 69.3319 ], "Yakkasaroy" => [ 41.2889, 69.2586 ],
+  "Shayxontohur" => [ 41.3264, 69.2401 ], "Olmazor" => [ 41.3550, 69.1950 ],
+  "Uchtepa" => [ 41.2950, 69.1700 ], "Sergeli" => [ 41.2081, 69.2295 ],
+  "Yashnobod" => [ 41.2950, 69.3400 ], "Mirobod" => [ 41.2989, 69.2801 ],
+  "Bektemir" => [ 41.2333, 69.3667 ], "Yangihayot" => [ 41.2650, 69.1450 ]
+}.freeze
+
 washes = WASHES.map do |attrs|
   set = attrs.delete(:set)
+  base_lat, base_lng = DISTRICT_COORDS[attrs[:district]]
+  attrs[:latitude] = (base_lat + rand(-0.004..0.004)).round(6)
+  attrs[:longitude] = (base_lng + rand(-0.004..0.004)).round(6)
   wash = Wash.create!(attrs)
   SERVICE_SETS[set].each do |(name, price, dur)|
     wash.services.create!(name: name, price: price, duration_minutes: dur)

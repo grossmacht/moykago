@@ -33,6 +33,16 @@
       </div>
     <% end %>
 
+    <h2 class="section__title">So'nggi 14 kun — daromad</h2>
+    <%= bar_chart(@daily, unit: "so'm") %>
+
+    <h2 class="section__title">Band soatlar (jami)</h2>
+    <% if @hourly.any? %>
+      <%= bar_chart(@hourly) %>
+    <% else %>
+      <p class="empty-note">Hali statistika yo'q.</p>
+    <% end %>
+
     <h2 class="section__title">So'nggi bronlar</h2>
     <div class="table-wrap">
       <table class="table">

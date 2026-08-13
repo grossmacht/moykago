@@ -2,7 +2,7 @@
 <section class="section page-head">
   <div class="container">
     <h1>Avtomoykalar<% if @district %> — <%= @district %><% end %></h1>
-    <%= form_with url: washes_path, method: :get, class: "filters" do %>
+    <%= form_with url: washes_path, method: :get, class: "filters", data: { controller: "geolocation", geolocation_target: "form" } do %>
       <select name="district" onchange="this.form.requestSubmit()" aria-label="Tuman">
         <option value="">Barcha tumanlar</option>
         <% Wash::DISTRICTS.each do |d| %>
@@ -13,16 +13,32 @@
         <option value="">Saralash</option>
         <option value="narx" <%= "selected" if params[:sort] == "narx" %>>Arzonidan</option>
         <option value="reyting" <%= "selected" if params[:sort] == "reyting" %>>Reyting bo'yicha</option>
+        <option value="eng_yaqin" <%= "selected" if params[:sort] == "eng_yaqin" %>>Eng yaqin</option>
       </select>
+      <input type="hidden" name="lat" value="<%= @lat %>" data-geolocation-target="lat">
+      <input type="hidden" name="lng" value="<%= @lng %>" data-geolocation-target="lng">
+      <button type="button" class="btn btn--ghost btn--sm" data-action="geolocation#locate">📍 Joylashuvimni aniqlash</button>
+      <span class="hint" data-geolocation-target="status"></span>
     <% end %>
   </div>
 </section>
+
+<% washes_with_coords = @washes.select { |w| w.latitude.present? && w.longitude.present? } %>
+<% if washes_with_coords.any? %>
+  <section class="section">
+    <div class="container">
+      <div data-controller="map"
+           data-map-markers-value="<%= washes_with_coords.map { |w| { lat: w.latitude, lng: w.longitude, name: w.name, url: wash_path(w) } }.to_json %>"
+           style="height:320px;border-radius:14px;overflow:hidden"></div>
+    </div>
+  </section>
+<% end %>
 
 <section class="section">
   <div class="container">
     <% if @washes.any? %>
       <div class="cards">
-        <%= render partial: "washes/card", collection: @washes, as: :wash %>
+        <%= render partial: "washes/card", collection: @washes, as: :wash, locals: { lat: @lat, lng: @lng } %>
       </div>
     <% else %>
       <div class="empty">

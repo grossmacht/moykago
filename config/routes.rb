@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :services, only: [ :index, :create, :edit, :update, :destroy ]
     resource  :wash, only: [ :edit, :update ]
     resources :wash_photos, only: [ :create, :destroy ]
+    get "analitika", to: "analytics#show", as: :analytics
   end
 
   namespace :admin do

@@ -16,7 +16,7 @@ module Panel
     def wash_params
       params.require(:wash).permit(
         :name, :district, :address, :phone, :description,
-        :open_hour, :close_hour, :bays
+        :open_hour, :close_hour, :bays, :latitude, :longitude
       )
     end
   end

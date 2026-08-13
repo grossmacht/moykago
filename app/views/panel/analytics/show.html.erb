@@ -1,0 +1,22 @@
+<% content_for :title, "Analitika — Panel" %>
+<section class="section">
+  <div class="container">
+    <%= render "panel/nav" %>
+    <h1>Analitika</h1>
+
+    <div class="stats">
+      <div class="stat"><p class="stat__n"><%= som(@month_gmv) %></p><p class="stat__l">Shu oy tushum</p></div>
+      <div class="stat"><p class="stat__n"><%= som(@month_commission) %></p><p class="stat__l">Shu oy platforma komissiyasi</p></div>
+    </div>
+
+    <h2 class="section__title">So'nggi 14 kun — tushum</h2>
+    <%= bar_chart(@daily, unit: "so'm") %>
+
+    <h2 class="section__title">Band soatlar (jami)</h2>
+    <% if @hourly.any? %>
+      <%= bar_chart(@hourly) %>
+    <% else %>
+      <p class="empty-note">Hali statistika yo'q.</p>
+    <% end %>
+  </div>
+</section>

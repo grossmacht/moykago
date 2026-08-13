@@ -4,9 +4,15 @@ class WashesController < ApplicationController
     @washes = Wash.includes(:services, :reviews).order(:name)
     @washes = @washes.where(district: @district) if @district
     @washes = @washes.to_a
+    @lat = params[:lat].presence
+    @lng = params[:lng].presence
     case params[:sort]
-    when "narx"    then @washes.sort_by! { |w| w.price_from || 10**9 }
-    when "reyting" then @washes.sort_by! { |w| -(w.rating || 0) }
+    when "narx"      then @washes.sort_by! { |w| w.price_from || 10**9 }
+    when "reyting"   then @washes.sort_by! { |w| -(w.rating || 0) }
+    when "eng_yaqin"
+      if @lat && @lng
+        @washes.sort_by! { |w| w.distance_km_from(@lat, @lng) || 10**9 }
+      end
     end
   end
 

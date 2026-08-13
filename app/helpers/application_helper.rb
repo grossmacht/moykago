@@ -27,4 +27,19 @@ module ApplicationHelper
   def status_badge(booking)
     %(<span class="badge badge--#{booking.status}">#{booking.status_label}</span>).html_safe
   end
+
+  # data: {label => qiymat} tartiblangan hash. Chartkick/JS kutubxonasiz,
+  # oddiy CSS ustunlar bilan chiziladi (loyihaning "og'ir bog'liqliksiz" uslubiga mos).
+  def bar_chart(data, unit: nil)
+    max = data.values.max.to_f
+    bars = data.map { |label, value|
+      pct = max.positive? ? (value / max * 100).round(1) : 0
+      value_label = unit ? "#{number_with_delimiter(value)} #{unit}" : number_with_delimiter(value)
+      %(<div class="bar-col">
+          <div class="bar-col__track"><div class="bar-col__fill" style="height:#{pct}%" title="#{value_label}"></div></div>
+          <span class="bar-col__label">#{label}</span>
+        </div>)
+    }.join
+    %(<div class="bars">#{bars}</div>).html_safe
+  end
 end

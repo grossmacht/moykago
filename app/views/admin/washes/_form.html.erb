@@ -5,6 +5,10 @@
   <label>Nomi <%= f.text_field :name, required: true %></label>
   <label>Tuman <%= f.select :district, Wash::DISTRICTS %></label>
   <label>Manzil <%= f.text_field :address, required: true %></label>
+  <div class="form-grid">
+    <label>Kenglik (latitude) <%= f.text_field :latitude, placeholder: "41.2995" %></label>
+    <label>Uzunlik (longitude) <%= f.text_field :longitude, placeholder: "69.2401" %></label>
+  </div>
   <label>Telefon <%= f.telephone_field :phone %></label>
   <label>Tavsif <%= f.text_area :description, rows: 3 %></label>
   <div class="form-grid form-grid--3">

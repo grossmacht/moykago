@@ -26,6 +26,12 @@
         <% end %>
       </div>
     <% end %>
+    <% if @wash.latitude.present? && @wash.longitude.present? %>
+      <div data-controller="map"
+           data-map-markers-value="<%= [ { lat: @wash.latitude, lng: @wash.longitude, name: @wash.name } ].to_json %>"
+           data-map-zoom-value="15"
+           style="height:220px;border-radius:14px;overflow:hidden;margin-top:14px"></div>
+    <% end %>
   </div>
 </section>
 

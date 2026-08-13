@@ -54,6 +54,17 @@ class Wash < ApplicationRecord
     bookings.where(date: range, status: :bajarildi).sum(:commission_amount)
   end
 
+  EARTH_RADIUS_KM = 6371.0
+
+  def distance_km_from(lat, lng)
+    return nil if latitude.blank? || longitude.blank? || lat.blank? || lng.blank?
+    lat1, lng1, lat2, lng2 = [ latitude, longitude, lat, lng ].map { |v| v.to_f * Math::PI / 180 }
+    dlat = lat2 - lat1
+    dlng = lng2 - lng1
+    a = Math.sin(dlat / 2)**2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlng / 2)**2
+    EARTH_RADIUS_KM * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+  end
+
   private
 
   def ensure_slug

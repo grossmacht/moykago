@@ -16,6 +16,11 @@ module Admin
       @by_wash = Wash.where(id: counts_by_wash_id.keys).index_by(&:id)
                       .map { |id, w| [ w, counts_by_wash_id[id] ] }
                       .sort_by { |_, count| -count }
+
+      last14 = (Date.current - 13)..Date.current
+      raw_daily = Booking.where(date: last14, status: :bajarildi).group(:date).sum(:amount_charged)
+      @daily = last14.index_with { |d| raw_daily[d] || 0 }.transform_keys { |d| d.strftime("%d.%m") }
+      @hourly = Booking.where(status: :bajarildi).group("substr(slot, 1, 2)").count.sort.to_h.transform_keys { |h| "#{h}:00" }
     end
   end
 end
