@@ -74,11 +74,16 @@
         <legend>3. Ma'lumotlaringiz</legend>
         <div class="form-grid">
           <label>Ismingiz
-            <%= f.text_field :customer_name, required: true, placeholder: "Aziz" %>
+            <%= f.text_field :customer_name, required: true, placeholder: "Aziz", value: f.object.customer_name || current_customer&.name %>
           </label>
           <label>Telefon
-            <%= f.telephone_field :customer_phone, required: true, placeholder: "+998 90 123 45 67" %>
+            <%= f.telephone_field :customer_phone, required: true, placeholder: "+998 90 123 45 67", value: f.object.customer_phone || current_customer&.phone %>
           </label>
+          <% if current_customer&.cars&.any? %>
+            <label>Mashina
+              <%= f.select :car_id, current_customer.cars.map { |c| [ c.label, c.id ] }, include_blank: "Boshqa (quyida yozing)" %>
+            </label>
+          <% end %>
           <label>Mashina (ixtiyoriy)
             <%= f.text_field :car_model, placeholder: "Cobalt, oq" %>
           </label>

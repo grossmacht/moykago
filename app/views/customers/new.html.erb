@@ -1,0 +1,20 @@
+<% content_for :title, "Ro'yxatdan o'tish — MoykaGo" %>
+<section class="section">
+  <div class="container container--narrow">
+    <h1>Ro'yxatdan o'tish</h1>
+    <p class="hint">Bron tarixingizni va mashinalaringizni saqlash uchun.</p>
+    <%= form_with model: @customer, url: customer_signup_path, class: "login-form" do |f| %>
+      <label>Ismingiz
+        <%= f.text_field :name, required: true, autofocus: true %>
+      </label>
+      <label>Telefon raqam
+        <%= f.telephone_field :phone, required: true, placeholder: "+998 90 123 45 67" %>
+      </label>
+      <label>Parol
+        <%= f.password_field :password, required: true %>
+      </label>
+      <%= f.submit "Ro'yxatdan o'tish", class: "btn btn--primary btn--big" %>
+    <% end %>
+    <p class="hint">Akkauntingiz bormi? <%= link_to "Kirish", customer_login_path %></p>
+  </div>
+</section>

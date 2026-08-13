@@ -35,7 +35,8 @@
                     <%= button_to "Tasdiqlash", panel_booking_path(b, status: "tasdiqlandi"), method: :patch, class: "btn btn--sm btn--primary" %>
                   <% end %>
                   <% if b.yangi? || b.tasdiqlandi? %>
-                    <%= button_to "Bajarildi", panel_booking_path(b, status: "bajarildi"), method: :patch, class: "btn btn--sm btn--ok" %>
+                    <%= button_to "✓ Naqd", panel_booking_path(b, status: "bajarildi", payment_method: "naqd"), method: :patch, class: "btn btn--sm btn--ok" %>
+                    <%= button_to "✓ Karta", panel_booking_path(b, status: "bajarildi", payment_method: "karta"), method: :patch, class: "btn btn--sm btn--ok" %>
                     <%= button_to "Bekor", panel_booking_path(b, status: "bekor"), method: :patch, class: "btn btn--sm btn--danger",
                           data: { turbo_confirm: "Bron bekor qilinsinmi?" } %>
                   <% end %>

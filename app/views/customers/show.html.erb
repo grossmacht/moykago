@@ -1,0 +1,42 @@
+<% content_for :title, "Kabinetim — MoykaGo" %>
+<section class="section">
+  <div class="container">
+    <div class="site-header__row">
+      <h1>Kabinetim — <%= current_customer.name %></h1>
+      <%= button_to "Chiqish", customer_logout_path, method: :delete, class: "btn btn--ghost btn--sm" %>
+    </div>
+
+    <h2 class="section__title">Mening mashinalarim</h2>
+    <% if @cars.any? %>
+      <ul class="chips">
+        <% @cars.each do |car| %>
+          <li class="chip"><%= car.label %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="empty-note">Hali mashina qo'shilmagan — birinchi bron paytida qo'shiladi.</p>
+    <% end %>
+
+    <h2 class="section__title">Bronlarim tarixi</h2>
+    <% if @bookings.any? %>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Kod</th><th>Moyka</th><th>Xizmat</th><th>Sana</th><th>Holat</th></tr></thead>
+          <tbody>
+            <% @bookings.each do |b| %>
+              <tr>
+                <td><%= link_to b.code, booking_status_path(b.code) %></td>
+                <td><%= b.wash.name %></td>
+                <td><%= b.service.name %></td>
+                <td><%= uz_date(b.date) %>, <%= b.slot %></td>
+                <td><%= status_badge(b) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <div class="empty"><p>Hali bron qilmagansiz.</p></div>
+    <% end %>
+  </div>
+</section>

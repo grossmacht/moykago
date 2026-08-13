@@ -8,8 +8,30 @@
       <div class="stat"><p class="stat__n"><%= @wash_count %></p><p class="stat__l">Faol moykalar</p></div>
       <div class="stat"><p class="stat__n"><%= @today_count %></p><p class="stat__l">Bugungi bronlar</p></div>
       <div class="stat"><p class="stat__n"><%= @month_count %></p><p class="stat__l">Shu oy bronlar</p></div>
-      <div class="stat"><p class="stat__n"><%= som(@month_gmv) %></p><p class="stat__l">Shu oy GMV</p></div>
+      <div class="stat"><p class="stat__n"><%= som(@month_gmv) %></p><p class="stat__l">Shu oy GMV (bajarilgan)</p></div>
+      <div class="stat"><p class="stat__n"><%= som(@month_commission) %></p><p class="stat__l">Shu oy komissiya</p></div>
     </div>
+    <p class="hint">GMV va komissiya faqat "bajarildi" deb belgilangan bronlar bo'yicha hisoblanadi (moyka egasi to'lov usulini kiritganda).</p>
+
+    <% if @by_wash.any? %>
+      <h2 class="section__title">Moykalar bo'yicha (shu oy)</h2>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Moyka</th><th>Bronlar soni</th><th>GMV</th><th>Komissiya</th></tr></thead>
+          <tbody>
+            <% month = Date.current.beginning_of_month..Date.current.end_of_month %>
+            <% @by_wash.each do |wash, count| %>
+              <tr>
+                <td><%= wash.name %></td>
+                <td><%= count %></td>
+                <td><%= som(wash.gmv_between(month)) %></td>
+                <td><%= som(wash.commission_owed_between(month)) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
 
     <h2 class="section__title">So'nggi bronlar</h2>
     <div class="table-wrap">

@@ -8,10 +8,14 @@ module Admin
       month = Date.current.beginning_of_month..Date.current.end_of_month
       month_bookings = Booking.where(date: month)
       @month_count = month_bookings.count
-      @month_gmv = month_bookings.where.not(status: :bekor)
-                                 .joins(:service).sum("services.price")
+      completed_this_month = month_bookings.where(status: :bajarildi)
+      @month_gmv = completed_this_month.sum(:amount_charged)
+      @month_commission = completed_this_month.sum(:commission_amount)
       @recent = Booking.includes(:wash, :service).order(created_at: :desc).limit(10)
-      @by_wash = Booking.where(date: month).group(:wash_id).count
+      counts_by_wash_id = month_bookings.group(:wash_id).count
+      @by_wash = Wash.where(id: counts_by_wash_id.keys).index_by(&:id)
+                      .map { |id, w| [ w, counts_by_wash_id[id] ] }
+                      .sort_by { |_, count| -count }
     end
   end
 end

@@ -24,14 +24,17 @@
         <nav class="site-nav">
           <%= link_to "Moykalar", washes_path %>
           <%= link_to "Bronlarim", lookup_path %>
-          <% if current_user %>
+          <% if current_customer %>
+            <%= link_to "Kabinetim", customer_dashboard_path, class: "site-nav__panel" %>
+          <% elsif current_user %>
             <% if current_user.admin? %>
               <%= link_to "Admin", admin_root_path, class: "site-nav__panel" %>
             <% elsif current_user.wash %>
               <%= link_to "Panel", panel_bookings_path, class: "site-nav__panel" %>
             <% end %>
           <% else %>
-            <%= link_to "Kirish", panel_login_path, class: "site-nav__login" %>
+            <%= link_to "Kirish", customer_login_path, class: "site-nav__login" %>
+            <%= link_to "Hamkorlar", panel_login_path, class: "site-nav__staff" %>
           <% end %>
         </nav>
       </div>

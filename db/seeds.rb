@@ -7,6 +7,8 @@ puts "Seeding..."
 
 Review.delete_all
 Booking.delete_all
+Car.delete_all
+Customer.delete_all
 Service.delete_all
 User.delete_all
 Wash.delete_all
@@ -134,4 +136,27 @@ washes.first(4).each_with_index do |wash, i|
   )
 end
 
-puts "Tayyor: #{Wash.count} moyka, #{Service.count} xizmat, #{Review.count} sharh, #{User.count} foydalanuvchi, #{Booking.count} bron."
+# Mijoz akkauntlari (demo parol: mijoz123)
+customers = [
+  Customer.create!(name: "Aziz Rahimov", phone: "+998901112200", password: "mijoz123"),
+  Customer.create!(name: "Dilnoza Karimova", phone: "+998901112201", password: "mijoz123")
+]
+customers.first.cars.create!(model: "Cobalt", make: "Chevrolet")
+customers.last.cars.create!(model: "Spark", make: "Chevrolet")
+
+# Bir nechta bajarilgan bron — komissiya paneli bo'sh ko'rinmasligi uchun
+washes.first(2).each_with_index do |wash, i|
+  customer = customers[i]
+  service = wash.services.first
+  # Bu "kechagi, allaqachon bajarilgan" bronni ifodalaydi — vaqt o'tib ketgan
+  # bo'lishi mumkinligi uchun yaratish tekshiruvlarini o'tkazib yuboramiz.
+  booking = wash.bookings.new(
+    service: service, date: Date.current, slot: format("%02d:00", wash.open_hour + 1),
+    customer_name: customer.name, customer_phone: customer.phone, customer: customer
+  )
+  booking.save!(validate: false)
+  booking.complete!(payment_method: i.even? ? :naqd : :karta)
+end
+
+puts "Tayyor: #{Wash.count} moyka, #{Service.count} xizmat, #{Review.count} sharh, #{User.count} foydalanuvchi, " \
+     "#{Customer.count} mijoz, #{Car.count} mashina, #{Booking.count} bron."

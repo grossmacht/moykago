@@ -1,0 +1,16 @@
+<% content_for :title, "Kirish — MoykaGo" %>
+<section class="section">
+  <div class="container container--narrow">
+    <h1>Mijoz sifatida kirish</h1>
+    <%= form_with url: customer_login_path, class: "login-form" do %>
+      <label>Telefon raqam
+        <input type="tel" name="phone" placeholder="+998 90 123 45 67" required autofocus>
+      </label>
+      <label>Parol
+        <input type="password" name="password" required>
+      </label>
+      <button type="submit" class="btn btn--primary btn--big">Kirish</button>
+    <% end %>
+    <p class="hint">Akkauntingiz yo'qmi? <%= link_to "Ro'yxatdan o'tish", customer_signup_path %></p>
+  </div>
+</section>

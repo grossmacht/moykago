@@ -65,6 +65,7 @@ img { max-width: 100%; }
 .site-nav__panel, .site-nav__login {
   border: 1.5px solid var(--water); border-radius: 999px; padding: 4px 14px; color: var(--water-deep) !important;
 }
+.site-nav__staff { font-size: 0.85rem !important; color: var(--ink-soft) !important; opacity: 0.75; }
 
 /* ---------- Hero ---------- */
 .hero {

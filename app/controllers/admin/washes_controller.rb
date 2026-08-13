@@ -47,7 +47,7 @@ module Admin
     def wash_params
       params.require(:wash).permit(
         :name, :district, :address, :phone, :description,
-        :open_hour, :close_hour, :bays, :featured
+        :open_hour, :close_hour, :bays, :featured, :commission_rate
       )
     end
 

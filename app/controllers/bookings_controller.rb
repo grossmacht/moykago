@@ -2,6 +2,7 @@ class BookingsController < ApplicationController
   def create
     @wash = Wash.find(booking_params[:wash_id])
     @booking = @wash.bookings.new(booking_params.except(:wash_id))
+    @booking.customer = current_customer if current_customer
 
     if @booking.save
       redirect_to booking_status_path(@booking.code),
@@ -46,7 +47,7 @@ class BookingsController < ApplicationController
   def booking_params
     params.require(:booking).permit(
       :wash_id, :service_id, :date, :slot,
-      :customer_name, :customer_phone, :car_model
+      :customer_name, :customer_phone, :car_model, :car_id
     )
   end
 end

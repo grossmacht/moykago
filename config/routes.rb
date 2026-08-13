@@ -11,6 +11,13 @@ Rails.application.routes.draw do
 
   resources :reviews, only: [ :create ]
 
+  get    "mijoz/royxat",  to: "customers#new",              as: :customer_signup
+  post   "mijoz/royxat",  to: "customers#create"
+  get    "kabinetim",     to: "customers#show",              as: :customer_dashboard
+  get    "mijoz/kirish",  to: "customers/sessions#new",      as: :customer_login
+  post   "mijoz/kirish",  to: "customers/sessions#create"
+  delete "mijoz/chiqish", to: "customers/sessions#destroy",  as: :customer_logout
+
   get    "panel/kirish",  to: "panel/sessions#new",     as: :panel_login
   post   "panel/kirish",  to: "panel/sessions#create"
   delete "panel/chiqish", to: "panel/sessions#destroy", as: :panel_logout

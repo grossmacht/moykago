@@ -15,13 +15,22 @@ module Panel
     def update
       booking = @wash.bookings.find(params[:id])
       new_status = params[:status]
-      if %w[tasdiqlandi bajarildi bekor].include?(new_status)
+
+      case new_status
+      when "bajarildi"
+        payment_method = params[:payment_method]
+        unless Booking.payment_methods.key?(payment_method)
+          redirect_to panel_bookings_path(date: booking.date), alert: "To'lov usulini tanlang" and return
+        end
+        booking.complete!(payment_method: payment_method)
+      when "tasdiqlandi", "bekor"
         booking.update!(status: new_status)
-        redirect_to panel_bookings_path(date: booking.date),
-          notice: "Bron #{booking.code}: #{booking.status_label.downcase}"
       else
-        redirect_to panel_bookings_path, alert: "Noto'g'ri holat"
+        redirect_to panel_bookings_path, alert: "Noto'g'ri holat" and return
       end
+
+      redirect_to panel_bookings_path(date: booking.date),
+        notice: "Bron #{booking.code}: #{booking.status_label.downcase}"
     end
   end
 end

@@ -13,6 +13,7 @@
     <label>Postlar <%= f.number_field :bays, min: 1, max: 20 %></label>
   </div>
   <label class="check-label"><%= f.check_box :featured %> Bosh sahifada ko'rsatilsin</label>
+  <label>Platforma komissiyasi (%) <%= f.number_field :commission_rate, min: 0, max: 100, step: 0.5 %></label>
 
   <h2 class="section__title">Moyka egasi (kirish huquqi)</h2>
   <p class="hint">To'ldirsangiz, shu telefon-parol bilan moyka paneliga kirish ochiladi.</p>

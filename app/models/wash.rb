@@ -7,6 +7,7 @@ class Wash < ApplicationRecord
   validates :name, :district, :address, presence: true
   validates :slug, presence: true, uniqueness: true
   validates :open_hour, :close_hour, :bays, presence: true
+  validates :commission_rate, numericality: { in: 0..100 }
 
   before_validation :ensure_slug
 
@@ -42,6 +43,14 @@ class Wash < ApplicationRecord
 
   def work_hours
     format("%02d:00 – %02d:00", open_hour, close_hour)
+  end
+
+  def gmv_between(range)
+    bookings.where(date: range, status: :bajarildi).sum(:amount_charged)
+  end
+
+  def commission_owed_between(range)
+    bookings.where(date: range, status: :bajarildi).sum(:commission_amount)
   end
 
   private
