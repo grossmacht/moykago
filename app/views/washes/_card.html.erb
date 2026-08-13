@@ -11,7 +11,7 @@
     <p class="card__meta"><%= wash.district %> · <%= wash.work_hours %></p>
     <div class="card__foot">
       <%= droplets(wash.rating, count: wash.reviews.size) %>
-      <span class="card__price"><%= wash.price_from ? "#{som(wash.price_from)} dan" : "" %></span>
+      <span class="card__price"><%= wash.price_from ? t("common.price_from", price: som(wash.price_from)) : "" %></span>
     </div>
     <% if (defined?(lat) && lat.present?) && (dist = wash.distance_km_from(lat, lng)) %>
       <p class="card__meta">📍 <%= dist.round(1) %> km</p>

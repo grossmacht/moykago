@@ -4,7 +4,7 @@ class ReviewsController < ApplicationController
     @review = @wash.reviews.new(review_params.except(:wash_id))
 
     if @review.save
-      redirect_to wash_path(@wash, anchor: "sharhlar"), notice: "Sharhingiz uchun rahmat!"
+      redirect_to wash_path(@wash, anchor: "sharhlar"), notice: t("washes.show.review_thanks")
     else
       redirect_to wash_path(@wash, anchor: "sharhlar"),
         alert: @review.errors.full_messages.to_sentence

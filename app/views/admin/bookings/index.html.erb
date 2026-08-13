@@ -5,8 +5,8 @@
     <h1>Barcha bronlar</h1>
     <div class="chips">
       <%= link_to "Hammasi", admin_bookings_path, class: "chip #{'chip--on' unless @status}" %>
-      <% Booking::STATUS_LABELS.each do |key, label| %>
-        <%= link_to label, admin_bookings_path(status: key), class: "chip #{'chip--on' if @status == key}" %>
+      <% Booking::STATUSES.each do |key| %>
+        <%= link_to I18n.t("bookings.status.#{key}"), admin_bookings_path(status: key), class: "chip #{'chip--on' if @status == key}" %>
       <% end %>
     </div>
     <div class="table-wrap">

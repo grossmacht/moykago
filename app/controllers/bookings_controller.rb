@@ -7,8 +7,8 @@ class BookingsController < ApplicationController
 
     if @booking.save
       finalize_discount!
-      notice = "Broningiz qabul qilindi! Kod: #{@booking.code}"
-      notice += " Promo-kod topilmadi yoki muddati o'tgan, chegirmasiz qabul qilindi." if @promo_error
+      notice = t("bookings.created", code: @booking.code)
+      notice += t("bookings.promo_invalid_note") if @promo_error
       redirect_to booking_status_path(@booking.code), notice: notice
     else
       redirect_to wash_path(@wash,
@@ -30,9 +30,9 @@ class BookingsController < ApplicationController
     @booking = Booking.find_by!(code: params[:code])
     if @booking.cancellable?
       @booking.bekor!
-      redirect_to booking_status_path(@booking.code), notice: "Bron bekor qilindi"
+      redirect_to booking_status_path(@booking.code), notice: t("bookings.cancelled")
     else
-      redirect_to booking_status_path(@booking.code), alert: "Bu bronni bekor qilib bo'lmaydi"
+      redirect_to booking_status_path(@booking.code), alert: t("bookings.cancel_not_allowed")
     end
   end
 

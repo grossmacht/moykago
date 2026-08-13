@@ -13,7 +13,7 @@ class CustomersController < ApplicationController
     end
     if @customer.save
       session[:customer_id] = @customer.id
-      redirect_to customer_dashboard_path, notice: "Xush kelibsiz, #{@customer.name}!"
+      redirect_to customer_dashboard_path, notice: t("customers.new.welcome", name: @customer.name)
     else
       flash.now[:alert] = @customer.errors.full_messages.to_sentence
       render :new, status: :unprocessable_entity

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   allow_browser versions: :modern
+  around_action :switch_locale
 
   helper_method :current_user, :current_customer
 
@@ -12,6 +13,19 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  # Puma oqimlari so'rovlar orasida qayta ishlatiladi, shuning uchun oddiy
+  # `I18n.locale = x` xavfli — `with_locale` har bir so'rovni izolyatsiya qiladi.
+  # Xodimlar paneli (panel/admin) — faqat o'zbekcha, mijoz sessiyasidagi
+  # til tanlovidan qat'i nazar.
+  def switch_locale(&action)
+    if params[:locale].present? && I18n.available_locales.map(&:to_s).include?(params[:locale])
+      session[:locale] = params[:locale]
+    end
+    staff_area = params[:controller].to_s.start_with?("admin/", "panel/")
+    locale = staff_area ? :uz : (session[:locale] || I18n.default_locale)
+    I18n.with_locale(locale, &action)
+  end
 
   def require_owner
     unless current_user

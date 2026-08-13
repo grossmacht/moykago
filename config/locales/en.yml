@@ -1,31 +1,165 @@
-# Files in the config/locales directory are used for internationalization and
-# are automatically loaded by Rails. If you want to use locales other than
-# English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more about the API, please read the Rails Internationalization guide
-# at https://guides.rubyonrails.org/i18n.html.
-#
-# Be aware that YAML interprets the following case-insensitive strings as
-# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
-# must be quoted to be interpreted as strings. For example:
-#
-#     en:
-#       "yes": yup
-#       enabled: "ON"
-
 en:
-  hello: "Hello world"
+  common:
+    currency: "UZS"
+    price_from: "from %{price}"
+
+  date:
+    month_names:
+      - ~
+      - January
+      - February
+      - March
+      - April
+      - May
+      - June
+      - July
+      - August
+      - September
+      - October
+      - November
+      - December
+    formats:
+      day_month: "%B %-d"
+    abbr_day_names: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]
+
+  nav:
+    washes: "Car washes"
+    my_bookings: "My bookings"
+    cabinet: "My account"
+    login: "Log in"
+    staff: "Partners"
+
+  footer:
+    tagline: "Find and book a car wash in Tashkent, all in one place."
+    payment_note: "Payment on-site for now — cash or card. Online payment (Payme / Click) coming soon."
+
+  home:
+    hero_eyebrow: "%{count} car washes across Tashkent"
+    hero_title: "Let your car"
+    hero_accent: "shine"
+    hero_title_end: ". No waiting."
+    hero_sub: "Pick a car wash near you, book a convenient time — your spot will be ready when you arrive."
+    all_districts: "All districts"
+    find_wash: "Find a car wash"
+    how_it_works: "How it works"
+    step1_title: "Find"
+    step1_desc: "Compare car washes in your district by price and rating."
+    step2_title: "Book"
+    step2_desc: "Choose a service and a convenient time — in a minute, no sign-up needed."
+    step3_title: "Arrive"
+    step3_desc: "Show up at your scheduled time, no waiting in line. Pay on-site."
+    featured: "Featured car washes"
+    see_all: "See all →"
+    by_district: "By district"
+
+  washes:
+    index:
+      title: "Car washes"
+      sort_label: "Sort by"
+      sort_cheapest: "Cheapest first"
+      sort_rating: "By rating"
+      sort_nearest: "Nearest"
+      locate_me: "📍 Find my location"
+      locating: "Locating..."
+      geolocation_unsupported: "Your browser can't detect your location"
+      geolocation_denied: "Location access denied — please choose a district manually"
+      empty: "No car washes in this district yet."
+      see_all: "See all car washes"
+    show:
+      bays: "bays"
+      map_open: "open on map"
+      book_title: "Book now"
+      step1: "1. Choose a service"
+      minutes: "min"
+      step2: "2. Date and time"
+      gray_hint: "Grey slots are taken or already past."
+      step3: "3. Your details"
+      your_name: "Your name"
+      phone: "Phone"
+      car_select: "Car"
+      car_other: "Other (specify below)"
+      car_optional: "Car (optional)"
+      promo_optional: "Promo code (optional)"
+      use_bonus: "Use my bonus balance"
+      available: "available"
+      submit: "Book now"
+      pay_note: "Payment on-site — cash or card. Booking is free."
+      reviews_title: "Reviews"
+      no_reviews: "No reviews yet — be the first!"
+      leave_review: "Leave a review"
+      your_rating: "Rating (1–5)"
+      comment: "Comment"
+      before_photo: "Before (optional)"
+      after_photo: "After (optional)"
+      send: "Submit"
+      review_thanks: "Thanks for your review!"
+      rating_options:
+        - [ "5 — Excellent", 5 ]
+        - [ "4 — Good", 4 ]
+        - [ "3 — Average", 3 ]
+        - [ "2 — Poor", 2 ]
+        - [ "1 — Very poor", 1 ]
+
+  bookings:
+    status:
+      yangi: "New"
+      tasdiqlandi: "Confirmed"
+      bajarildi: "Completed"
+      bekor: "Cancelled"
+    created: "Your booking is confirmed! Code: %{code}"
+    promo_invalid_note: " Promo code not found or expired, booking accepted without discount."
+    cancelled: "Booking cancelled"
+    cancel_not_allowed: "This booking can't be cancelled"
+    show:
+      code_label: "Booking code"
+      wash: "Car wash"
+      address: "Address"
+      service: "Service"
+      price: "Price"
+      paid_on_site: "(paid on-site)"
+      time: "Time"
+      at: "at"
+      customer: "Customer"
+      car: "Car"
+      cancel: "Cancel booking"
+      cancel_confirm: "Cancel this booking?"
+      save_hint: "Save this page — you can check your booking status anytime using the code."
+      all_bookings: "All my bookings"
+    lookup:
+      title: "My bookings"
+      hint: "Enter the phone number you used when booking."
+      search: "Search"
+      not_found: "No bookings found for this number."
+      choose_wash: "Choose a car wash"
+
+  customers:
+    new:
+      title: "Sign up"
+      hint: "To save your booking history and cars."
+      name: "Your name"
+      phone: "Phone number"
+      password: "Password"
+      referral_optional: "Referral code (optional)"
+      referral_placeholder: "Friend's code"
+      submit: "Sign up"
+      have_account: "Already have an account?"
+      login: "Log in"
+      welcome: "Welcome, %{name}!"
+    sessions:
+      title: "Customer login"
+      no_account: "Don't have an account?"
+      signup: "Sign up"
+      invalid: "Invalid phone number or password"
+      logged_out: "You've been logged out"
+
+  activerecord:
+    errors:
+      models:
+        booking:
+          attributes:
+            date:
+              past_date: "can't be in the past"
+            slot:
+              invalid_slot: "invalid time slot"
+              slot_past: "this time has already passed"
+              slot_taken: "this time is taken, please choose another"

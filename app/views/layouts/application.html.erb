@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="uz">
+<html lang="<%= I18n.locale %>">
   <head>
     <title><%= content_for(:title) || "MoykaGo — Toshkentda avtomoyka bron qilish" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -24,10 +24,10 @@
           Moyka<em>Go</em>
         <% end %>
         <nav class="site-nav">
-          <%= link_to "Moykalar", washes_path %>
-          <%= link_to "Bronlarim", lookup_path %>
+          <%= link_to t("nav.washes"), washes_path %>
+          <%= link_to t("nav.my_bookings"), lookup_path %>
           <% if current_customer %>
-            <%= link_to "Kabinetim", customer_dashboard_path, class: "site-nav__panel" %>
+            <%= link_to t("nav.cabinet"), customer_dashboard_path, class: "site-nav__panel" %>
           <% elsif current_user %>
             <% if current_user.admin? %>
               <%= link_to "Admin", admin_root_path, class: "site-nav__panel" %>
@@ -35,9 +35,15 @@
               <%= link_to "Panel", panel_bookings_path, class: "site-nav__panel" %>
             <% end %>
           <% else %>
-            <%= link_to "Kirish", customer_login_path, class: "site-nav__login" %>
-            <%= link_to "Hamkorlar", panel_login_path, class: "site-nav__staff" %>
+            <%= link_to t("nav.login"), customer_login_path, class: "site-nav__login" %>
+            <%= link_to t("nav.staff"), panel_login_path, class: "site-nav__staff" %>
           <% end %>
+          <span class="lang-switch">
+            <% I18n.available_locales.each do |loc| %>
+              <%= link_to loc.to_s.upcase, url_for(request.query_parameters.merge(locale: loc)),
+                    class: "lang-switch__item #{'on' if I18n.locale == loc}" %>
+            <% end %>
+          </span>
         </nav>
       </div>
     </header>
@@ -56,8 +62,8 @@
     <footer class="site-footer">
       <div class="container">
         <p class="site-footer__brand">Moyka<em>Go</em></p>
-        <p>Toshkent avtomoykalarini bir joyda toping va bron qiling.</p>
-        <p class="site-footer__note">To'lov hozircha joyida — naqd yoki karta orqali. Onlayn to'lov (Payme / Click) tez orada.</p>
+        <p><%= t("footer.tagline") %></p>
+        <p class="site-footer__note"><%= t("footer.payment_note") %></p>
       </div>
     </footer>
   </body>

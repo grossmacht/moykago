@@ -1,0 +1,165 @@
+uz:
+  common:
+    currency: "so'm"
+    price_from: "%{price} dan"
+
+  date:
+    month_names:
+      - ~
+      - yanvar
+      - fevral
+      - mart
+      - aprel
+      - may
+      - iyun
+      - iyul
+      - avgust
+      - sentabr
+      - oktabr
+      - noyabr
+      - dekabr
+    formats:
+      day_month: "%-d-%B"
+    abbr_day_names: [ "Yak", "Du", "Se", "Chor", "Pay", "Ju", "Shan" ]
+
+  nav:
+    washes: "Moykalar"
+    my_bookings: "Bronlarim"
+    cabinet: "Kabinetim"
+    login: "Kirish"
+    staff: "Hamkorlar"
+
+  footer:
+    tagline: "Toshkent avtomoykalarini bir joyda toping va bron qiling."
+    payment_note: "To'lov hozircha joyida — naqd yoki karta orqali. Onlayn to'lov (Payme / Click) tez orada."
+
+  home:
+    hero_eyebrow: "Toshkent bo'ylab %{count} ta moyka"
+    hero_title: "Mashinangiz"
+    hero_accent: "yaltirasin"
+    hero_title_end: ". Navbatsiz."
+    hero_sub: "Yaqiningizdagi avtomoykani tanlang, qulay vaqtga bron qiling — kelganingizda joy tayyor bo'ladi."
+    all_districts: "Barcha tumanlar"
+    find_wash: "Moyka topish"
+    how_it_works: "Qanday ishlaydi?"
+    step1_title: "Toping"
+    step1_desc: "Tumaningizdagi moykalarni narx va reyting bo'yicha solishtiring."
+    step2_title: "Bron qiling"
+    step2_desc: "Xizmat va qulay vaqtni tanlang — bir daqiqada, ro'yxatdan o'tmasdan."
+    step3_title: "Keling"
+    step3_desc: "Belgilangan vaqtda keling, navbatsiz yuviladi. To'lov joyida."
+    featured: "Tanlangan moykalar"
+    see_all: "Hammasi →"
+    by_district: "Tumanlar bo'yicha"
+
+  washes:
+    index:
+      title: "Avtomoykalar"
+      sort_label: "Saralash"
+      sort_cheapest: "Arzonidan"
+      sort_rating: "Reyting bo'yicha"
+      sort_nearest: "Eng yaqin"
+      locate_me: "📍 Joylashuvimni aniqlash"
+      locating: "Joylashuv aniqlanmoqda..."
+      geolocation_unsupported: "Brauzeringiz joylashuvni aniqlay olmaydi"
+      geolocation_denied: "Joylashuvga ruxsat berilmadi — qo'lda tuman tanlang"
+      empty: "Bu tumanda hozircha moyka yo'q."
+      see_all: "Barcha moykalarni ko'rish"
+    show:
+      bays: "post"
+      map_open: "xaritada ochish"
+      book_title: "Bron qilish"
+      step1: "1. Xizmatni tanlang"
+      minutes: "daqiqa"
+      step2: "2. Sana va vaqt"
+      gray_hint: "Kulrang vaqtlar band yoki o'tib ketgan."
+      step3: "3. Ma'lumotlaringiz"
+      your_name: "Ismingiz"
+      phone: "Telefon"
+      car_select: "Mashina"
+      car_other: "Boshqa (quyida yozing)"
+      car_optional: "Mashina (ixtiyoriy)"
+      promo_optional: "Promo-kod (ixtiyoriy)"
+      use_bonus: "Bonus balansimni ishlataman"
+      available: "mavjud"
+      submit: "Bron qilish"
+      pay_note: "To'lov joyida — naqd yoki karta. Bron bepul."
+      reviews_title: "Sharhlar"
+      no_reviews: "Hali sharh yo'q — birinchi bo'ling!"
+      leave_review: "Sharh qoldirish"
+      your_rating: "Baho (1–5)"
+      comment: "Izoh"
+      before_photo: "Oldin (ixtiyoriy)"
+      after_photo: "Keyin (ixtiyoriy)"
+      send: "Yuborish"
+      review_thanks: "Sharhingiz uchun rahmat!"
+      rating_options:
+        - [ "5 — Zo'r", 5 ]
+        - [ "4 — Yaxshi", 4 ]
+        - [ "3 — O'rtacha", 3 ]
+        - [ "2 — Yomon", 2 ]
+        - [ "1 — Juda yomon", 1 ]
+
+  bookings:
+    status:
+      yangi: "Yangi"
+      tasdiqlandi: "Tasdiqlandi"
+      bajarildi: "Bajarildi"
+      bekor: "Bekor qilindi"
+    created: "Broningiz qabul qilindi! Kod: %{code}"
+    promo_invalid_note: " Promo-kod topilmadi yoki muddati o'tgan, chegirmasiz qabul qilindi."
+    cancelled: "Bron bekor qilindi"
+    cancel_not_allowed: "Bu bronni bekor qilib bo'lmaydi"
+    show:
+      code_label: "Bron kodi"
+      wash: "Moyka"
+      address: "Manzil"
+      service: "Xizmat"
+      price: "Narx"
+      paid_on_site: "(joyida to'lanadi)"
+      time: "Vaqt"
+      at: "soat"
+      customer: "Mijoz"
+      car: "Mashina"
+      cancel: "Bronni bekor qilish"
+      cancel_confirm: "Bronni bekor qilasizmi?"
+      save_hint: "Bu sahifani saqlab qo'ying — kod orqali bron holatini istalgan vaqtda ko'rasiz."
+      all_bookings: "Barcha bronlarim"
+    lookup:
+      title: "Bronlarim"
+      hint: "Bron qilishda ko'rsatgan telefon raqamingizni kiriting."
+      search: "Qidirish"
+      not_found: "Bu raqamda bron topilmadi."
+      choose_wash: "Moyka tanlash"
+
+  customers:
+    new:
+      title: "Ro'yxatdan o'tish"
+      hint: "Bron tarixingizni va mashinalaringizni saqlash uchun."
+      name: "Ismingiz"
+      phone: "Telefon raqam"
+      password: "Parol"
+      referral_optional: "Taklif kodi (ixtiyoriy)"
+      referral_placeholder: "Do'stingiz kodi"
+      submit: "Ro'yxatdan o'tish"
+      have_account: "Akkauntingiz bormi?"
+      login: "Kirish"
+      welcome: "Xush kelibsiz, %{name}!"
+    sessions:
+      title: "Mijoz sifatida kirish"
+      no_account: "Akkauntingiz yo'qmi?"
+      signup: "Ro'yxatdan o'tish"
+      invalid: "Telefon raqam yoki parol noto'g'ri"
+      logged_out: "Tizimdan chiqdingiz"
+
+  activerecord:
+    errors:
+      models:
+        booking:
+          attributes:
+            date:
+              past_date: "o'tgan sanaga bron qilib bo'lmaydi"
+            slot:
+              invalid_slot: "noto'g'ri vaqt tanlandi"
+              slot_past: "bu vaqt allaqachon o'tib ketgan"
+              slot_taken: "bu vaqt band, boshqasini tanlang"

@@ -1,11 +1,11 @@
 <% content_for :title, "Bronlarim — MoykaGo" %>
 <section class="section">
   <div class="container container--narrow">
-    <h1>Bronlarim</h1>
-    <p class="hint">Bron qilishda ko'rsatgan telefon raqamingizni kiriting.</p>
+    <h1><%= t("bookings.lookup.title") %></h1>
+    <p class="hint"><%= t("bookings.lookup.hint") %></p>
     <%= form_with url: lookup_path, method: :get, class: "lookup-form" do %>
       <input type="tel" name="phone" value="<%= params[:phone] %>" placeholder="+998 90 123 45 67" required>
-      <button type="submit" class="btn btn--primary">Qidirish</button>
+      <button type="submit" class="btn btn--primary"><%= t("bookings.lookup.search") %></button>
     <% end %>
 
     <% if @bookings %>
@@ -23,8 +23,8 @@
         </div>
       <% else %>
         <div class="empty">
-          <p>Bu raqamda bron topilmadi.</p>
-          <%= link_to "Moyka tanlash", washes_path, class: "btn btn--accent" %>
+          <p><%= t("bookings.lookup.not_found") %></p>
+          <%= link_to t("bookings.lookup.choose_wash"), washes_path, class: "btn btn--accent" %>
         </div>
       <% end %>
     <% end %>

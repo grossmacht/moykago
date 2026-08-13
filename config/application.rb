@@ -25,6 +25,13 @@ module Moyka
 
     config.time_zone = "Asia/Tashkent"
 
+    config.i18n.default_locale = :uz
+    config.i18n.available_locales = [ :uz, :ru, :en ]
+    # Rails o'zining standart validatsiya xabarlarini (masalan "can't be blank")
+    # faqat inglizcha bilan ta'minlaydi — o'zbekcha/ruscha tarjimasi yo'q joyda
+    # "translation missing" ko'rinib qolmasligi uchun inglizchaga zaxiralanadi.
+    config.i18n.fallbacks = [ :en ]
+
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.

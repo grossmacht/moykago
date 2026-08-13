@@ -1,16 +1,16 @@
-<% content_for :title, "Kirish — MoykaGo" %>
+<% content_for :title, "#{t('customers.sessions.title')} — MoykaGo" %>
 <section class="section">
   <div class="container container--narrow">
-    <h1>Mijoz sifatida kirish</h1>
+    <h1><%= t("customers.sessions.title") %></h1>
     <%= form_with url: customer_login_path, class: "login-form" do %>
-      <label>Telefon raqam
+      <label><%= t("customers.new.phone") %>
         <input type="tel" name="phone" placeholder="+998 90 123 45 67" required autofocus>
       </label>
-      <label>Parol
+      <label><%= t("customers.new.password") %>
         <input type="password" name="password" required>
       </label>
-      <button type="submit" class="btn btn--primary btn--big">Kirish</button>
+      <button type="submit" class="btn btn--primary btn--big"><%= t("nav.login") %></button>
     <% end %>
-    <p class="hint">Akkauntingiz yo'qmi? <%= link_to "Ro'yxatdan o'tish", customer_signup_path %></p>
+    <p class="hint"><%= t("customers.sessions.no_account") %> <%= link_to t("customers.sessions.signup"), customer_signup_path %></p>
   </div>
 </section>

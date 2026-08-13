@@ -66,6 +66,9 @@ img { max-width: 100%; }
   border: 1.5px solid var(--water); border-radius: 999px; padding: 4px 14px; color: var(--water-deep) !important;
 }
 .site-nav__staff { font-size: 0.85rem !important; color: var(--ink-soft) !important; opacity: 0.75; }
+.lang-switch { display: inline-flex; gap: 4px; margin-left: 6px; }
+.lang-switch__item { font-size: 0.78rem !important; padding: 2px 6px; border-radius: 6px; opacity: 0.55; }
+.lang-switch__item.on { opacity: 1; background: var(--foam); color: var(--water-deep) !important; }
 
 /* ---------- Oddiy CSS ustunli diagramma (analitika) ---------- */
 .bars { display: flex; align-items: flex-end; gap: 6px; height: 160px; padding: 10px 4px 0; }

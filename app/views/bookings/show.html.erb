@@ -3,27 +3,27 @@
   <div class="container container--narrow">
     <div class="ticket">
       <div class="ticket__head">
-        <p class="ticket__label">Bron kodi</p>
+        <p class="ticket__label"><%= t("bookings.show.code_label") %></p>
         <p class="ticket__code"><%= @booking.code %></p>
         <%= status_badge(@booking) %>
       </div>
       <div class="ticket__body">
-        <div class="ticket__row"><span>Moyka</span><strong><%= link_to @booking.wash.name, wash_path(@booking.wash) %></strong></div>
-        <div class="ticket__row"><span>Manzil</span><strong><%= @booking.wash.address %></strong></div>
-        <div class="ticket__row"><span>Xizmat</span><strong><%= @booking.service.name %></strong></div>
-        <div class="ticket__row"><span>Narx</span><strong><%= som(@booking.service.price) %> (joyida to'lanadi)</strong></div>
-        <div class="ticket__row"><span>Vaqt</span><strong><%= uz_date(@booking.date) %>, soat <%= @booking.slot %></strong></div>
-        <div class="ticket__row"><span>Mijoz</span><strong><%= @booking.customer_name %>, <%= @booking.customer_phone %></strong></div>
+        <div class="ticket__row"><span><%= t("bookings.show.wash") %></span><strong><%= link_to @booking.wash.name, wash_path(@booking.wash) %></strong></div>
+        <div class="ticket__row"><span><%= t("bookings.show.address") %></span><strong><%= @booking.wash.address %></strong></div>
+        <div class="ticket__row"><span><%= t("bookings.show.service") %></span><strong><%= @booking.service.name %></strong></div>
+        <div class="ticket__row"><span><%= t("bookings.show.price") %></span><strong><%= som(@booking.service.price) %> <%= t("bookings.show.paid_on_site") %></strong></div>
+        <div class="ticket__row"><span><%= t("bookings.show.time") %></span><strong><%= uz_date(@booking.date) %>, <%= t("bookings.show.at") %> <%= @booking.slot %></strong></div>
+        <div class="ticket__row"><span><%= t("bookings.show.customer") %></span><strong><%= @booking.customer_name %>, <%= @booking.customer_phone %></strong></div>
         <% if @booking.car_model.present? %>
-          <div class="ticket__row"><span>Mashina</span><strong><%= @booking.car_model %></strong></div>
+          <div class="ticket__row"><span><%= t("bookings.show.car") %></span><strong><%= @booking.car_model %></strong></div>
         <% end %>
       </div>
       <% if @booking.cancellable? %>
-        <%= button_to "Bronni bekor qilish", cancel_booking_path(@booking.code),
-              class: "btn btn--danger", data: { turbo_confirm: "Bronni bekor qilasizmi?" } %>
+        <%= button_to t("bookings.show.cancel"), cancel_booking_path(@booking.code),
+              class: "btn btn--danger", data: { turbo_confirm: t("bookings.show.cancel_confirm") } %>
       <% end %>
     </div>
-    <p class="hint hint--center">Bu sahifani saqlab qo'ying — kod orqali bron holatini istalgan vaqtda ko'rasiz.</p>
-    <p class="hint hint--center"><%= link_to "Barcha bronlarim", lookup_path(phone: @booking.customer_phone) %></p>
+    <p class="hint hint--center"><%= t("bookings.show.save_hint") %></p>
+    <p class="hint hint--center"><%= link_to t("bookings.show.all_bookings"), lookup_path(phone: @booking.customer_phone) %></p>
   </div>
 </section>

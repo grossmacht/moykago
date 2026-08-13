@@ -18,14 +18,9 @@ class Booking < ApplicationRecord
   before_create :generate_code
   after_create :save_car_for_customer
 
-  STATUS_LABELS = {
-    "yangi"       => "Yangi",
-    "tasdiqlandi" => "Tasdiqlandi",
-    "bajarildi"   => "Bajarildi",
-    "bekor"       => "Bekor qilindi"
-  }.freeze
+  STATUSES = %w[yangi tasdiqlandi bajarildi bekor].freeze
 
-  def status_label = STATUS_LABELS[status]
+  def status_label = I18n.t("bookings.status.#{status}")
 
   def cancellable?
     (yangi? || tasdiqlandi?) && date >= Date.current
@@ -95,19 +90,19 @@ class Booking < ApplicationRecord
 
   def date_not_past
     return if date.blank?
-    errors.add(:date, "o'tgan sanaga bron qilib bo'lmaydi") if date < Date.current
+    errors.add(:date, :past_date) if date < Date.current
   end
 
   def slot_available
     return if wash.blank? || date.blank? || slot.blank?
     unless wash.slots.include?(slot)
-      errors.add(:slot, "noto'g'ri vaqt tanlandi")
+      errors.add(:slot, :invalid_slot)
       return
     end
     if wash.slot_past?(date, slot)
-      errors.add(:slot, "bu vaqt allaqachon o'tib ketgan")
+      errors.add(:slot, :slot_past)
     elsif wash.slot_taken?(date, slot)
-      errors.add(:slot, "bu vaqt band, boshqasini tanlang")
+      errors.add(:slot, :slot_taken)
     end
   end
 end

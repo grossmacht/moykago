@@ -10,14 +10,14 @@ module Customers
         session[:customer_id] = customer.id
         redirect_to customer_dashboard_path
       else
-        flash.now[:alert] = "Telefon raqam yoki parol noto'g'ri"
+        flash.now[:alert] = t("customers.sessions.invalid")
         render :new, status: :unprocessable_entity
       end
     end
 
     def destroy
       session.delete(:customer_id)
-      redirect_to root_path, notice: "Tizimdan chiqdingiz"
+      redirect_to root_path, notice: t("customers.sessions.logged_out")
     end
   end
 end

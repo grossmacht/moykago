@@ -1,23 +1,23 @@
-<% content_for :title, "Ro'yxatdan o'tish — MoykaGo" %>
+<% content_for :title, "#{t('customers.new.title')} — MoykaGo" %>
 <section class="section">
   <div class="container container--narrow">
-    <h1>Ro'yxatdan o'tish</h1>
-    <p class="hint">Bron tarixingizni va mashinalaringizni saqlash uchun.</p>
+    <h1><%= t("customers.new.title") %></h1>
+    <p class="hint"><%= t("customers.new.hint") %></p>
     <%= form_with model: @customer, url: customer_signup_path, class: "login-form" do |f| %>
-      <label>Ismingiz
+      <label><%= t("customers.new.name") %>
         <%= f.text_field :name, required: true, autofocus: true %>
       </label>
-      <label>Telefon raqam
+      <label><%= t("customers.new.phone") %>
         <%= f.telephone_field :phone, required: true, placeholder: "+998 90 123 45 67" %>
       </label>
-      <label>Parol
+      <label><%= t("customers.new.password") %>
         <%= f.password_field :password, required: true %>
       </label>
-      <label>Taklif kodi (ixtiyoriy)
-        <input type="text" name="referral_code" value="<%= params[:ref] %>" placeholder="Do'stingiz kodi">
+      <label><%= t("customers.new.referral_optional") %>
+        <input type="text" name="referral_code" value="<%= params[:ref] %>" placeholder="<%= t('customers.new.referral_placeholder') %>">
       </label>
-      <%= f.submit "Ro'yxatdan o'tish", class: "btn btn--primary btn--big" %>
+      <%= f.submit t("customers.new.submit"), class: "btn btn--primary btn--big" %>
     <% end %>
-    <p class="hint">Akkauntingiz bormi? <%= link_to "Kirish", customer_login_path %></p>
+    <p class="hint"><%= t("customers.new.have_account") %> <%= link_to t("customers.new.login"), customer_login_path %></p>
   </div>
 </section>

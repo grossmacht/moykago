@@ -1,23 +1,28 @@
-<% content_for :title, "Moykalar — MoykaGo" %>
+<% content_for :title, "#{t('washes.index.title')} — MoykaGo" %>
 <section class="section page-head">
   <div class="container">
-    <h1>Avtomoykalar<% if @district %> — <%= @district %><% end %></h1>
-    <%= form_with url: washes_path, method: :get, class: "filters", data: { controller: "geolocation", geolocation_target: "form" } do %>
-      <select name="district" onchange="this.form.requestSubmit()" aria-label="Tuman">
-        <option value="">Barcha tumanlar</option>
+    <h1><%= t("washes.index.title") %><% if @district %> — <%= @district %><% end %></h1>
+    <%= form_with url: washes_path, method: :get, class: "filters", data: {
+          controller: "geolocation", geolocation_target: "form",
+          geolocation_locating_value: t("washes.index.locating"),
+          geolocation_unsupported_value: t("washes.index.geolocation_unsupported"),
+          geolocation_denied_value: t("washes.index.geolocation_denied")
+        } do %>
+      <select name="district" onchange="this.form.requestSubmit()" aria-label="<%= t('home.all_districts') %>">
+        <option value=""><%= t("home.all_districts") %></option>
         <% Wash::DISTRICTS.each do |d| %>
           <option value="<%= d %>" <%= "selected" if @district == d %>><%= d %></option>
         <% end %>
       </select>
-      <select name="sort" onchange="this.form.requestSubmit()" aria-label="Saralash">
-        <option value="">Saralash</option>
-        <option value="narx" <%= "selected" if params[:sort] == "narx" %>>Arzonidan</option>
-        <option value="reyting" <%= "selected" if params[:sort] == "reyting" %>>Reyting bo'yicha</option>
-        <option value="eng_yaqin" <%= "selected" if params[:sort] == "eng_yaqin" %>>Eng yaqin</option>
+      <select name="sort" onchange="this.form.requestSubmit()" aria-label="<%= t('washes.index.sort_label') %>">
+        <option value=""><%= t("washes.index.sort_label") %></option>
+        <option value="narx" <%= "selected" if params[:sort] == "narx" %>><%= t("washes.index.sort_cheapest") %></option>
+        <option value="reyting" <%= "selected" if params[:sort] == "reyting" %>><%= t("washes.index.sort_rating") %></option>
+        <option value="eng_yaqin" <%= "selected" if params[:sort] == "eng_yaqin" %>><%= t("washes.index.sort_nearest") %></option>
       </select>
       <input type="hidden" name="lat" value="<%= @lat %>" data-geolocation-target="lat">
       <input type="hidden" name="lng" value="<%= @lng %>" data-geolocation-target="lng">
-      <button type="button" class="btn btn--ghost btn--sm" data-action="geolocation#locate">📍 Joylashuvimni aniqlash</button>
+      <button type="button" class="btn btn--ghost btn--sm" data-action="geolocation#locate"><%= t("washes.index.locate_me") %></button>
       <span class="hint" data-geolocation-target="status"></span>
     <% end %>
   </div>
@@ -42,8 +47,8 @@
       </div>
     <% else %>
       <div class="empty">
-        <p>Bu tumanda hozircha moyka yo'q.</p>
-        <%= link_to "Barcha moykalarni ko'rish", washes_path, class: "btn btn--primary" %>
+        <p><%= t("washes.index.empty") %></p>
+        <%= link_to t("washes.index.see_all"), washes_path, class: "btn btn--primary" %>
       </div>
     <% end %>
   </div>

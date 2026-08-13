@@ -1,7 +1,7 @@
 module ApplicationHelper
   def som(amount)
     return "—" if amount.blank?
-    "#{number_with_delimiter(amount, delimiter: ' ')} so'm"
+    "#{number_with_delimiter(amount, delimiter: ' ')} #{t('common.currency')}"
   end
 
   def droplets(rating, count: nil)
@@ -10,7 +10,7 @@ module ApplicationHelper
     html = (1..5).map { |i|
       %(<span class="drop #{'drop--on' if i <= full}" aria-hidden="true">#{droplet_svg}</span>)
     }.join
-    label = rating.positive? ? rating.to_s : "Yangi"
+    label = rating.positive? ? rating.to_s : I18n.t("bookings.status.yangi")
     suffix = count ? %( <span class="drop-count">(#{count})</span>) : ""
     %(<span class="drops" title="#{label}">#{html} <span class="drop-num">#{label}</span>#{suffix}</span>).html_safe
   end
@@ -20,8 +20,7 @@ module ApplicationHelper
   end
 
   def uz_date(date)
-    months = %w[yanvar fevral mart aprel may iyun iyul avgust sentabr oktabr noyabr dekabr]
-    "#{date.day}-#{months[date.month - 1]}"
+    I18n.l(date, format: :day_month)
   end
 
   def status_badge(booking)
