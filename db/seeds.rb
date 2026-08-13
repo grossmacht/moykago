@@ -8,6 +8,7 @@ puts "Seeding..."
 Review.delete_all
 Booking.delete_all
 Car.delete_all
+PromoCode.delete_all
 Customer.delete_all
 Service.delete_all
 User.delete_all
@@ -143,6 +144,10 @@ customers = [
 ]
 customers.first.cars.create!(model: "Cobalt", make: "Chevrolet")
 customers.last.cars.create!(model: "Spark", make: "Chevrolet")
+customers.last.update!(referred_by: customers.first) # Dilnoza — Azizning taklifi bilan
+
+# Demo promo-kod
+PromoCode.create!(code: "MOYKA10", discount_type: :percent, value: 10, usage_limit: 100)
 
 # Bir nechta bajarilgan bron — komissiya paneli bo'sh ko'rinmasligi uchun
 washes.first(2).each_with_index do |wash, i|
@@ -159,4 +164,4 @@ washes.first(2).each_with_index do |wash, i|
 end
 
 puts "Tayyor: #{Wash.count} moyka, #{Service.count} xizmat, #{Review.count} sharh, #{User.count} foydalanuvchi, " \
-     "#{Customer.count} mijoz, #{Car.count} mashina, #{Booking.count} bron."
+     "#{Customer.count} mijoz, #{Car.count} mashina, #{Booking.count} bron, #{PromoCode.count} promo-kod."

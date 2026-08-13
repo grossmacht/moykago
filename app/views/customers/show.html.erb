@@ -6,6 +6,28 @@
       <%= button_to "Chiqish", customer_logout_path, method: :delete, class: "btn btn--ghost btn--sm" %>
     </div>
 
+    <div class="stats">
+      <div class="stat"><p class="stat__n"><%= som(current_customer.bonus_balance) %></p><p class="stat__l">Bonus balans</p></div>
+    </div>
+    <p class="hint">
+      Do'stingizni taklif qiling — u ro'yxatdan o'tib birinchi yuvishni bajarganda, sizga <%= som(Booking::REFERRAL_BONUS) %> bonus tushadi.<br>
+      Taklif kodingiz: <strong><%= current_customer.referral_code %></strong>
+      &nbsp;<%= link_to "havolani nusxalash", customer_signup_path(ref: current_customer.referral_code) %>
+    </p>
+
+    <% loyalty_washes = Wash.joins(:bookings).where(bookings: { customer_id: current_customer.id }).distinct %>
+    <% if loyalty_washes.any? %>
+      <h2 class="section__title">Sodiqlik dasturi</h2>
+      <ul class="chips">
+        <% loyalty_washes.each do |w| %>
+          <% progress = current_customer.stamp_progress_at(w) %>
+          <li class="chip"><%= w.name %>: <%= progress %>/<%= Customer::LOYALTY_EVERY %>
+            <% if current_customer.stamp_discount_eligible?(w) %> — 🎉 keyingi yuvish tekin!<% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
     <h2 class="section__title">Mening mashinalarim</h2>
     <% if @cars.any? %>
       <ul class="chips">

@@ -3,6 +3,7 @@ class Wash < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :users, dependent: :nullify
+  has_many_attached :photos
 
   validates :name, :district, :address, presence: true
   validates :slug, presence: true, uniqueness: true

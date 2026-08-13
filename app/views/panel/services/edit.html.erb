@@ -3,10 +3,14 @@
   <div class="container container--narrow">
     <%= render "panel/nav" %>
     <h1>Xizmatni tahrirlash</h1>
-    <%= form_with model: @service, url: panel_service_path(@service), class: "login-form" do |f| %>
+    <%= form_with model: @service, url: panel_service_path(@service), class: "login-form", multipart: true do |f| %>
       <label>Nomi <%= f.text_field :name, required: true %></label>
       <label>Narx (so'm) <%= f.number_field :price, required: true, min: 1000 %></label>
       <label>Davomiylik (daqiqa) <%= f.number_field :duration_minutes, required: true, min: 5 %></label>
+      <% if @service.photo.attached? %>
+        <p><%= image_tag @service.photo, style: "height:80px;border-radius:8px" %></p>
+      <% end %>
+      <label>Rasm <%= f.file_field :photo, accept: "image/*" %></label>
       <button type="submit" class="btn btn--primary">Saqlash</button>
       <%= link_to "Orqaga", panel_services_path, class: "btn btn--ghost" %>
     <% end %>

@@ -4,6 +4,7 @@
     <%= link_to "Ko'rsatkichlar", admin_root_path, class: ("on" if controller_name == "dashboard") %>
     <%= link_to "Moykalar", admin_washes_path, class: ("on" if controller_name == "washes") %>
     <%= link_to "Bronlar", admin_bookings_path, class: ("on" if controller_name == "bookings") %>
+    <%= link_to "Promo-kodlar", admin_promo_codes_path, class: ("on" if controller_name == "promo_codes") %>
     <%= button_to "Chiqish", panel_logout_path, method: :delete, class: "linklike" %>
   </nav>
 </div>

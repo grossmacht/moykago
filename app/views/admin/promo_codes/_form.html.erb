@@ -1,0 +1,17 @@
+<%= form_with model: [ :admin, @promo_code ], class: "login-form" do |f| %>
+  <% if @promo_code.errors.any? %>
+    <div class="flash flash--err"><%= @promo_code.errors.full_messages.to_sentence %></div>
+  <% end %>
+  <label>Kod <%= f.text_field :code, required: true, placeholder: "MOYKA10" %></label>
+  <div class="form-grid">
+    <label>Turi <%= f.select :discount_type, [ [ "Foiz (%)", "percent" ], [ "Qat'iy summa (so'm)", "fixed" ] ] %></label>
+    <label>Qiymat <%= f.number_field :value, required: true, min: 1 %></label>
+  </div>
+  <div class="form-grid">
+    <label>Amal qilish muddati (ixtiyoriy) <%= f.datetime_field :expires_at %></label>
+    <label>Foydalanish limiti (ixtiyoriy) <%= f.number_field :usage_limit, min: 1 %></label>
+    <label>Minimal summa (ixtiyoriy) <%= f.number_field :min_amount, min: 0 %></label>
+  </div>
+  <button type="submit" class="btn btn--primary btn--big">Saqlash</button>
+  <%= link_to "Orqaga", admin_promo_codes_path, class: "btn btn--ghost" %>
+<% end %>

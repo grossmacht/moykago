@@ -13,6 +13,9 @@
       <label>Parol
         <%= f.password_field :password, required: true %>
       </label>
+      <label>Taklif kodi (ixtiyoriy)
+        <input type="text" name="referral_code" value="<%= params[:ref] %>" placeholder="Do'stingiz kodi">
+      </label>
       <%= f.submit "Ro'yxatdan o'tish", class: "btn btn--primary btn--big" %>
     <% end %>
     <p class="hint">Akkauntingiz bormi? <%= link_to "Kirish", customer_login_path %></p>

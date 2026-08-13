@@ -19,6 +19,13 @@
     <% if @wash.description.present? %>
       <p class="wash-desc"><%= @wash.description %></p>
     <% end %>
+    <% if @wash.photos.attached? %>
+      <div class="chips">
+        <% @wash.photos.each do |photo| %>
+          <%= image_tag photo, style: "height:110px;border-radius:10px;object-fit:cover" %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </section>
 
@@ -34,6 +41,7 @@
           <% @wash.services.order(:price).each do |s| %>
             <label class="service-opt">
               <%= f.radio_button :service_id, s.id, required: true %>
+              <% if s.photo.attached? %><%= image_tag s.photo, style: "width:36px;height:36px;border-radius:8px;object-fit:cover" %><% end %>
               <span class="service-opt__body">
                 <span class="service-opt__name"><%= s.name %></span>
                 <span class="service-opt__info"><%= s.duration_minutes %> daqiqa</span>
@@ -87,7 +95,15 @@
           <label>Mashina (ixtiyoriy)
             <%= f.text_field :car_model, placeholder: "Cobalt, oq" %>
           </label>
+          <label>Promo-kod (ixtiyoriy)
+            <%= f.text_field :promo_code, placeholder: "MOYKA10" %>
+          </label>
         </div>
+        <% if current_customer && current_customer.bonus_balance.positive? %>
+          <label class="check-label">
+            <%= f.check_box :use_bonus %> Bonus balansimni ishlataman (<%= som(current_customer.bonus_balance) %> mavjud)
+          </label>
+        <% end %>
       </fieldset>
 
       <button type="submit" class="btn btn--accent btn--big">Bron qilish</button>
@@ -108,6 +124,12 @@
               <%= droplets(r.rating) %>
             </div>
             <% if r.comment.present? %><p><%= r.comment %></p><% end %>
+            <% if r.before_photo.attached? || r.after_photo.attached? %>
+              <div class="review__photos">
+                <% if r.before_photo.attached? %><%= image_tag r.before_photo, style: "height:90px;border-radius:8px" %><% end %>
+                <% if r.after_photo.attached? %><%= image_tag r.after_photo, style: "height:90px;border-radius:8px" %><% end %>
+              </div>
+            <% end %>
           </div>
         <% end %>
       </div>
@@ -117,7 +139,7 @@
 
     <details class="review-form-wrap">
       <summary class="btn btn--ghost">Sharh qoldirish</summary>
-      <%= form_with model: Review.new, url: reviews_path, class: "review-form" do |f| %>
+      <%= form_with model: Review.new, url: reviews_path, class: "review-form", multipart: true do |f| %>
         <%= f.hidden_field :wash_id, value: @wash.id %>
         <div class="form-grid">
           <label>Ismingiz <%= f.text_field :name, required: true %></label>
@@ -126,6 +148,10 @@
           </label>
         </div>
         <label>Izoh <%= f.text_area :comment, rows: 3 %></label>
+        <div class="form-grid">
+          <label>Oldin (ixtiyoriy) <%= f.file_field :before_photo, accept: "image/*" %></label>
+          <label>Keyin (ixtiyoriy) <%= f.file_field :after_photo, accept: "image/*" %></label>
+        </div>
         <button type="submit" class="btn btn--primary">Yuborish</button>
       <% end %>
     </details>

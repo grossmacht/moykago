@@ -40,7 +40,7 @@ module Panel
     private
 
     def service_params
-      params.require(:service).permit(:name, :price, :duration_minutes)
+      params.require(:service).permit(:name, :price, :duration_minutes, :photo)
     end
   end
 end

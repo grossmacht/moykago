@@ -26,12 +26,14 @@ Rails.application.routes.draw do
     resources :bookings, only: [ :index, :update ]
     resources :services, only: [ :index, :create, :edit, :update, :destroy ]
     resource  :wash, only: [ :edit, :update ]
+    resources :wash_photos, only: [ :create, :destroy ]
   end
 
   namespace :admin do
     root "dashboard#index"
     resources :washes, except: [ :show ]
     resources :bookings, only: [ :index ]
+    resources :promo_codes, except: [ :show ]
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

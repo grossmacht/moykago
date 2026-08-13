@@ -18,5 +18,24 @@
       </div>
       <button type="submit" class="btn btn--primary">Saqlash</button>
     <% end %>
+
+    <h2 class="section__title">Rasmlar</h2>
+    <% if @wash.photos.any? %>
+      <div class="chips">
+        <% @wash.photos.each do |photo| %>
+          <span class="chip">
+            <%= image_tag photo, style: "height:60px;border-radius:8px;vertical-align:middle" %>
+            <%= button_to "✕", panel_wash_photo_path(photo), method: :delete, class: "linklike",
+                  data: { turbo_confirm: "Rasm o'chirilsinmi?" } %>
+          </span>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="empty-note">Hali rasm yuklanmagan.</p>
+    <% end %>
+    <%= form_with url: panel_wash_photos_path, method: :post, class: "login-form", multipart: true do %>
+      <label>Yangi rasm(lar) <input type="file" name="photos[]" multiple accept="image/*"></label>
+      <button type="submit" class="btn btn--ghost">Yuklash</button>
+    <% end %>
   </div>
 </section>

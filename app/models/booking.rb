@@ -3,6 +3,7 @@ class Booking < ApplicationRecord
   belongs_to :service
   belongs_to :customer, optional: true
   belongs_to :car, optional: true
+  belongs_to :promo_code, optional: true
   has_one :review, dependent: :nullify
 
   enum :status, { yangi: 0, tasdiqlandi: 1, bajarildi: 2, bekor: 3 }, default: :yangi
@@ -34,20 +35,25 @@ class Booking < ApplicationRecord
     car&.label.presence || car_model.presence || "—"
   end
 
+  REFERRAL_BONUS = 10_000
+
   # Bron "bajarildi" deb belgilanganda shu yerdan o'tadi — narx/komissiya
   # bron yaratilgan paytda emas, aynan shu yerda, bir marta hisoblanadi.
   def complete!(payment_method:, amount_charged: nil)
     return if bajarildi?
 
-    charge = amount_charged || service.price
+    charge = amount_charged || (service.price - discount_amount.to_i)
     rate = wash.commission_rate
-    update!(
-      status: :bajarildi,
-      payment_method: payment_method,
-      amount_charged: charge,
-      commission_rate: rate,
-      commission_amount: (charge * rate / 100.0).round
-    )
+    transaction do
+      update!(
+        status: :bajarildi,
+        payment_method: payment_method,
+        amount_charged: charge,
+        commission_rate: rate,
+        commission_amount: (charge * rate / 100.0).round
+      )
+      credit_referral_bonus!
+    end
   end
 
   private
@@ -67,6 +73,17 @@ class Booking < ApplicationRecord
     return if customer.blank? || car_id.present? || car_model.blank?
     car = customer.cars.find_or_create_by(model: car_model.strip)
     update_column(:car_id, car.id) if car.persisted?
+  end
+
+  # Referal bonusi faqat bitta shartga javob bersa va faqat bir marta beriladi:
+  # taklif qilingan mijozning ILK bajarilgan broni shu bo'lsa.
+  def credit_referral_bonus!
+    return unless customer&.referred_by
+    return if customer.referral_bonus_granted?
+    return unless customer.bookings.where(status: :bajarildi).count == 1
+
+    customer.referred_by.increment!(:bonus_balance, REFERRAL_BONUS)
+    customer.update!(referral_bonus_granted: true)
   end
 
   def generate_code

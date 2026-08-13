@@ -1,0 +1,30 @@
+<% content_for :title, "Promo-kodlar — Admin" %>
+<section class="section">
+  <div class="container">
+    <%= render "admin/nav" %>
+    <div class="section__head">
+      <h1>Promo-kodlar</h1>
+      <%= link_to "+ Yangi promo-kod", new_admin_promo_code_path, class: "btn btn--accent" %>
+    </div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>Kod</th><th>Chegirma</th><th>Ishlatilgan</th><th>Amal qilish muddati</th><th></th></tr></thead>
+        <tbody>
+          <% @promo_codes.each do |p| %>
+            <tr>
+              <td><strong><%= p.code %></strong></td>
+              <td><%= p.percent? ? "#{p.value}%" : som(p.value) %></td>
+              <td><%= p.used_count %><%= "/#{p.usage_limit}" if p.usage_limit %></td>
+              <td><%= p.expires_at ? uz_date(p.expires_at.to_date) : "—" %></td>
+              <td class="table__actions">
+                <%= link_to "Tahrirlash", edit_admin_promo_code_path(p), class: "btn btn--sm btn--ghost" %>
+                <%= button_to "O'chirish", admin_promo_code_path(p), method: :delete, class: "btn btn--sm btn--danger",
+                      data: { turbo_confirm: "#{p.code} o'chirilsinmi?" } %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

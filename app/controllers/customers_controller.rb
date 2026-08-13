@@ -8,6 +8,9 @@ class CustomersController < ApplicationController
 
   def create
     @customer = Customer.new(customer_params)
+    if params[:referral_code].present?
+      @customer.referred_by = Customer.find_by(referral_code: params[:referral_code].to_s.strip.upcase)
+    end
     if @customer.save
       session[:customer_id] = @customer.id
       redirect_to customer_dashboard_path, notice: "Xush kelibsiz, #{@customer.name}!"
