@@ -3,6 +3,7 @@
     <div class="flash flash--err"><%= @wash.errors.full_messages.to_sentence %></div>
   <% end %>
   <label>Nomi <%= f.text_field :name, required: true %></label>
+  <label>Moyka turi <%= f.select :wash_type, Wash::WASH_TYPES.map { |wt| [ t("wash_types.#{wt}"), wt ] } %></label>
   <label>Tuman <%= f.select :district, Wash::DISTRICTS %></label>
   <label>Manzil <%= f.text_field :address, required: true %></label>
   <div class="form-grid">

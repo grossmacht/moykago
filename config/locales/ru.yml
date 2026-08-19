@@ -52,9 +52,16 @@ ru:
     see_all: "Все →"
     by_district: "По районам"
 
+  wash_types:
+    all: "Все типы"
+    full_service: "Полное обслуживание"
+    self_service: "Мойка самообслуживания (SAM)"
+    automatic: "Автоматическая мойка"
+
   washes:
     index:
       title: "Автомойки"
+      type_label: "Тип мойки"
       sort_label: "Сортировка"
       sort_cheapest: "Сначала дешёвые"
       sort_rating: "По рейтингу"

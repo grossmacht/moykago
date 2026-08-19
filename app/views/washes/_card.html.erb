@@ -7,6 +7,9 @@
     <% end %>
   </div>
   <div class="card__body">
+    <% unless wash.full_service? %>
+      <span class="badge badge--<%= wash.wash_type %>"><%= t("wash_types.#{wash.wash_type}") %></span>
+    <% end %>
     <h3 class="card__name"><%= wash.name %></h3>
     <p class="card__meta"><%= wash.district %> · <%= wash.work_hours %></p>
     <div class="card__foot">

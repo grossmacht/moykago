@@ -1,8 +1,10 @@
 class WashesController < ApplicationController
   def index
     @district = params[:district].presence
+    @wash_type = params[:wash_type].presence
     @washes = Wash.includes(:services, :reviews).order(:name)
     @washes = @washes.where(district: @district) if @district
+    @washes = @washes.by_type(@wash_type)
     @washes = @washes.to_a
     @lat = params[:lat].presence
     @lng = params[:lng].presence

@@ -52,9 +52,16 @@ uz:
     see_all: "Hammasi →"
     by_district: "Tumanlar bo'yicha"
 
+  wash_types:
+    all: "Barcha turlar"
+    full_service: "To'liq xizmat"
+    self_service: "O'zi yuvish (SAM)"
+    automatic: "Avtomat moyka"
+
   washes:
     index:
       title: "Avtomoykalar"
+      type_label: "Moyka turi"
       sort_label: "Saralash"
       sort_cheapest: "Arzonidan"
       sort_rating: "Reyting bo'yicha"

@@ -14,6 +14,12 @@
           <option value="<%= d %>" <%= "selected" if @district == d %>><%= d %></option>
         <% end %>
       </select>
+      <select name="wash_type" onchange="this.form.requestSubmit()" aria-label="<%= t('washes.index.type_label') %>">
+        <option value=""><%= t("wash_types.all") %></option>
+        <% Wash::WASH_TYPES.each do |wt| %>
+          <option value="<%= wt %>" <%= "selected" if @wash_type == wt %>><%= t("wash_types.#{wt}") %></option>
+        <% end %>
+      </select>
       <select name="sort" onchange="this.form.requestSubmit()" aria-label="<%= t('washes.index.sort_label') %>">
         <option value=""><%= t("washes.index.sort_label") %></option>
         <option value="narx" <%= "selected" if params[:sort] == "narx" %>><%= t("washes.index.sort_cheapest") %></option>

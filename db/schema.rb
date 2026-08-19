@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_13_113130) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_19_143000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -167,8 +167,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_13_113130) do
     t.string "phone"
     t.string "slug"
     t.datetime "updated_at", null: false
+    t.string "wash_type", default: "full_service", null: false
     t.index ["district"], name: "index_washes_on_district"
     t.index ["slug"], name: "index_washes_on_slug", unique: true
+    t.index ["wash_type"], name: "index_washes_on_wash_type"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

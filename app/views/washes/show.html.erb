@@ -2,6 +2,9 @@
 <section class="section page-head">
   <div class="container">
     <p class="crumbs"><%= link_to t("nav.washes"), washes_path %> / <%= @wash.district %></p>
+    <% unless @wash.full_service? %>
+      <span class="badge badge--<%= @wash.wash_type %>"><%= t("wash_types.#{@wash.wash_type}") %></span>
+    <% end %>
     <h1><%= @wash.name %></h1>
     <div class="wash-meta">
       <%= droplets(@wash.rating, count: @wash.reviews.size) %>

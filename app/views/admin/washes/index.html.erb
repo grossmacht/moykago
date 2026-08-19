@@ -8,11 +8,12 @@
     </div>
     <div class="table-wrap">
       <table class="table">
-        <thead><tr><th>Nomi</th><th>Tuman</th><th>Egasi</th><th>Bronlar</th><th></th></tr></thead>
+        <thead><tr><th>Nomi</th><th>Turi</th><th>Tuman</th><th>Egasi</th><th>Bronlar</th><th></th></tr></thead>
         <tbody>
           <% @washes.each do |w| %>
             <tr>
               <td><%= link_to w.name, wash_path(w) %><% if w.featured? %> ⭐<% end %></td>
+              <td><%= t("wash_types.#{w.wash_type}") %></td>
               <td><%= w.district %></td>
               <td><%= w.users.map(&:phone).join(", ").presence || "—" %></td>
               <td><%= w.bookings.size %></td>

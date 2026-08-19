@@ -32,6 +32,16 @@ SERVICE_SETS = {
     [ "Premium yuvish (vosk bilan)", 160_000, 60 ],
     [ "Detailing yuvish", 350_000, 120 ],
     [ "Kuzov polirovka", 900_000, 240 ]
+  ],
+  self_service: [
+    [ "O'zi yuvish — 15 daqiqa", 25_000, 15 ],
+    [ "O'zi yuvish — 30 daqiqa", 45_000, 30 ],
+    [ "Ko'pik + parvarish — 20 daqiqa", 35_000, 20 ]
+  ],
+  automatic: [
+    [ "Standart dastur (avtomat)", 35_000, 8 ],
+    [ "Premium dastur (voskli, avtomat)", 55_000, 12 ],
+    [ "Deluxe dastur (quritish bilan)", 75_000, 15 ]
   ]
 }.freeze
 
@@ -71,7 +81,20 @@ WASHES = [
     description: "Halqa yo'lida qulay joylashuv, katta mashinalar uchun ham post bor." },
   { name: "Yangihayot Moyka Plus", district: "Yangihayot", address: "Index bozori yoni, 2A",
     phone: "+998933211230", open_hour: 8, close_hour: 22, bays: 3, set: :full,
-    description: "Yangihayotdagi eng yangi moyka: zamonaviy uskuna, isitiladigan boks." }
+    description: "Yangihayotdagi eng yangi moyka: zamonaviy uskuna, isitiladigan boks." },
+
+  { name: "SAM Box 24", district: "Chilonzor", address: "Qatortol ko'chasi, 5",
+    phone: "+998901112244", open_hour: 0, close_hour: 24, bays: 2, wash_type: "self_service", set: :self_service,
+    description: "24/7 ishlaydigan o'zi-o'ziga xizmat ko'rsatish moykasi: ko'pik, shampun va bosim ostidagi suv — o'zingiz yuvasiz, narxi arzon." },
+  { name: "Tez Yuv SAM", district: "Sergeli", address: "Yangi Sergeli ko'chasi, 55",
+    phone: "+998935556611", open_hour: 6, close_hour: 24, bays: 3, wash_type: "self_service", set: :self_service,
+    description: "3 ta mustaqil boks, navbatsiz. O'zingiz yuvib, vaqtingizni tejang." },
+  { name: "AutoWash Robot", district: "Yunusobod", address: "Amir Temur shoh ko'chasi, 120",
+    phone: "+998901119900", open_hour: 0, close_hour: 24, bays: 1, wash_type: "automatic", set: :automatic,
+    description: "To'liq avtomatlashtirilgan portal moyka — 8 daqiqada tayyor, 24/7 ishlaydi, navbat deyarli bo'lmaydi." },
+  { name: "Portal Moyka Plus", district: "Mirobod", address: "Nizomiy ko'chasi, 33",
+    phone: "+998977712340", open_hour: 7, close_hour: 23, bays: 1, wash_type: "automatic", set: :automatic,
+    description: "Zamonaviy tunnel-tipidagi avtomat moyka: kontaktsiz yuvish, quritish bilan." }
 ]
 
 REVIEWERS = [ "Aziz", "Jasur", "Dilshod", "Malika", "Sardor", "Nodira", "Bekzod", "Kamola", "Ulug'bek", "Shohruh" ]

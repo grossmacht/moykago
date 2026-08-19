@@ -52,9 +52,16 @@ en:
     see_all: "See all →"
     by_district: "By district"
 
+  wash_types:
+    all: "All types"
+    full_service: "Full service"
+    self_service: "Self-service (SAM)"
+    automatic: "Automatic wash"
+
   washes:
     index:
       title: "Car washes"
+      type_label: "Wash type"
       sort_label: "Sort by"
       sort_cheapest: "Cheapest first"
       sort_rating: "By rating"

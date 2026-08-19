@@ -9,6 +9,7 @@ class Wash < ApplicationRecord
   validates :slug, presence: true, uniqueness: true
   validates :open_hour, :close_hour, :bays, presence: true
   validates :commission_rate, numericality: { in: 0..100 }
+  validates :wash_type, inclusion: { in: -> { WASH_TYPES } }
 
   before_validation :ensure_slug
 
@@ -17,7 +18,14 @@ class Wash < ApplicationRecord
     "Olmazor", "Uchtepa", "Sergeli", "Yashnobod", "Mirobod", "Bektemir", "Yangihayot"
   ].freeze
 
+  WASH_TYPES = %w[full_service self_service automatic].freeze
+
   scope :featured, -> { where(featured: true) }
+  scope :by_type, ->(type) { where(wash_type: type) if type.present? }
+
+  def full_service? = wash_type == "full_service"
+  def self_service? = wash_type == "self_service"
+  def automatic? = wash_type == "automatic"
 
   def to_param = slug
 
