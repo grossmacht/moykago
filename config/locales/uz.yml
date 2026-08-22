@@ -2,6 +2,7 @@ uz:
   common:
     currency: "so'm"
     price_from: "%{price} dan"
+    per_minute: "daqiqa"
 
   date:
     month_names:
@@ -76,9 +77,14 @@ uz:
       bays: "post"
       map_open: "xaritada ochish"
       book_title: "Bron qilish"
+      book_title_self_service: "Boks band qilish"
       step1: "1. Xizmatni tanlang"
+      step1_self_service: "1. Qaysi funksiyadan foydalanasiz?"
       minutes: "daqiqa"
+      recommended_duration: "tavsiya: %{n} daqiqa"
       step2: "2. Sana va vaqt"
+      step2_self_service: "2. Qachon kelasiz?"
+      self_service_note: "SAM boks faqat bugunga band qilinadi. To'lov joyida, ishlatgan daqiqangizga qarab olinadi."
       gray_hint: "Kulrang vaqtlar band yoki o'tib ketgan."
       step3: "3. Ma'lumotlaringiz"
       your_name: "Ismingiz"
@@ -166,6 +172,7 @@ uz:
           attributes:
             date:
               past_date: "o'tgan sanaga bron qilib bo'lmaydi"
+              self_service_future_date: "SAM boks faqat bugungi kunga band qilinadi"
             slot:
               invalid_slot: "noto'g'ri vaqt tanlandi"
               slot_past: "bu vaqt allaqachon o'tib ketgan"

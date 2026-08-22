@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_19_143000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_20_082335) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -135,6 +135,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_19_143000) do
     t.integer "duration_minutes"
     t.string "name"
     t.integer "price"
+    t.string "pricing_unit", default: "fixed", null: false
     t.datetime "updated_at", null: false
     t.integer "wash_id", null: false
     t.index ["wash_id"], name: "index_services_on_wash_id"

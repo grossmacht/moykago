@@ -33,10 +33,14 @@ SERVICE_SETS = {
     [ "Detailing yuvish", 350_000, 120 ],
     [ "Kuzov polirovka", 900_000, 240 ]
   ],
+  # SAM boks — bu yerdagi narx BIR DAQIQA uchun (mijoz joyida hisoblagichga
+  # qarab pul tashlaydi/kartadan yechadi). "dur" esa taxminiy tavsiya etilgan
+  # vaqt, oldindan sotib olinadigan paket emas.
   self_service: [
-    [ "O'zi yuvish — 15 daqiqa", 25_000, 15 ],
-    [ "O'zi yuvish — 30 daqiqa", 45_000, 30 ],
-    [ "Ko'pik + parvarish — 20 daqiqa", 35_000, 20 ]
+    [ "Bosimli suv bilan yuvish", 700, 10 ],
+    [ "Ko'pik bilan yuvish", 1_100, 8 ],
+    [ "Voskli ko'pik (himoya qatlami)", 1_600, 6 ],
+    [ "G'ildirak/disklarni kimyoviy tozalash", 1_000, 5 ]
   ],
   automatic: [
     [ "Standart dastur (avtomat)", 35_000, 8 ],
@@ -126,8 +130,9 @@ washes = WASHES.map do |attrs|
   attrs[:latitude] = (base_lat + rand(-0.004..0.004)).round(6)
   attrs[:longitude] = (base_lng + rand(-0.004..0.004)).round(6)
   wash = Wash.create!(attrs)
+  pricing_unit = set == :self_service ? "per_minute" : "fixed"
   SERVICE_SETS[set].each do |(name, price, dur)|
-    wash.services.create!(name: name, price: price, duration_minutes: dur)
+    wash.services.create!(name: name, price: price, duration_minutes: dur, pricing_unit: pricing_unit)
   end
   wash
 end

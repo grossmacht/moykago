@@ -2,6 +2,7 @@ ru:
   common:
     currency: "сум"
     price_from: "от %{price}"
+    per_minute: "мин"
 
   date:
     month_names:
@@ -76,9 +77,14 @@ ru:
       bays: "постов"
       map_open: "открыть на карте"
       book_title: "Забронировать"
+      book_title_self_service: "Забронировать бокс"
       step1: "1. Выберите услугу"
+      step1_self_service: "1. Какую функцию используете?"
       minutes: "мин"
+      recommended_duration: "рекомендуется: %{n} мин"
       step2: "2. Дата и время"
+      step2_self_service: "2. Когда подъедете?"
+      self_service_note: "Бокс самообслуживания бронируется только на сегодня. Оплата на месте — по фактическим минутам."
       gray_hint: "Серые слоты заняты или уже прошли."
       step3: "3. Ваши данные"
       your_name: "Ваше имя"
@@ -166,6 +172,7 @@ ru:
           attributes:
             date:
               past_date: "нельзя забронировать на прошедшую дату"
+              self_service_future_date: "бокс самообслуживания бронируется только на сегодня"
             slot:
               invalid_slot: "выбрано неверное время"
               slot_past: "это время уже прошло"

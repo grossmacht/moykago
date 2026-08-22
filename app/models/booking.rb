@@ -12,6 +12,7 @@ class Booking < ApplicationRecord
   validates :date, :slot, :customer_name, :customer_phone, presence: true
   validate :date_not_past
   validate :slot_available, on: :create
+  validate :self_service_same_day
 
   before_validation :normalize_phone
   before_validation :auto_link_customer_by_phone
@@ -91,6 +92,13 @@ class Booking < ApplicationRecord
   def date_not_past
     return if date.blank?
     errors.add(:date, :past_date) if date < Date.current
+  end
+
+  # SAM boks bron emas, "kelayapman" bildirishnomasi — shuning uchun faqat
+  # bugungi kunga amal qiladi, oldindan uzoq muddatga band qilinmaydi.
+  def self_service_same_day
+    return if date.blank? || wash.blank? || !wash.self_service?
+    errors.add(:date, :self_service_future_date) if date != Date.current
   end
 
   def slot_available

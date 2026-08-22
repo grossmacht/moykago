@@ -29,7 +29,11 @@ class Wash < ApplicationRecord
 
   def to_param = slug
 
+  # SAM (o'zi yuvish) boksda mijozlar ancha tez almashadi — soatlik emas,
+  # 15 daqiqalik oraliqda band qilinadi. To'liq xizmat va avtomat moykalar
+  # uchun soatlik jadval yetarli.
   def slots
+    return quarter_hour_slots if self_service?
     (open_hour...close_hour).map { |h| format("%02d:00", h) }
   end
 
@@ -38,7 +42,10 @@ class Wash < ApplicationRecord
   end
 
   def slot_past?(date, slot)
-    date == Date.current && slot.to_i <= Time.current.hour
+    return false unless date == Date.current
+    hour, minute = slot.split(":").map(&:to_i)
+    now = Time.current
+    hour < now.hour || (hour == now.hour && minute <= now.min)
   end
 
   def rating
@@ -46,8 +53,13 @@ class Wash < ApplicationRecord
     avg ? avg.round(1) : nil
   end
 
+  # "Arzonidan" saralashda daqiqasiga narxlanadigan xizmatlarni belgilangan
+  # narxlar bilan solishtirsa bo'ladigan qilib, tavsiya etilgan davomiylikka
+  # ko'paytirib, taxminiy umumiy narxga keltiradi.
   def price_from
-    services.minimum(:price)
+    cheapest = services.min_by(&:price)
+    return nil unless cheapest
+    cheapest.per_minute? ? cheapest.price * cheapest.duration_minutes : cheapest.price
   end
 
   def work_hours
@@ -77,5 +89,9 @@ class Wash < ApplicationRecord
 
   def ensure_slug
     self.slug = name.to_s.parameterize if slug.blank?
+  end
+
+  def quarter_hour_slots
+    (open_hour * 4...close_hour * 4).map { |q| format("%02d:%02d", q / 4, (q % 4) * 15) }
   end
 end

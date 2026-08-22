@@ -20,7 +20,7 @@ class WashesController < ApplicationController
 
   def show
     @wash = Wash.includes(:services, reviews: :booking).find_by!(slug: params[:slug])
-    @date = parse_date(params[:date])
+    @date = parse_date(params[:date], @wash)
     @booking = Booking.new(
       service_id: params[:service_id],
       customer_name: params[:customer_name],
@@ -31,9 +31,12 @@ class WashesController < ApplicationController
 
   private
 
-  def parse_date(value)
+  # SAM boks "kelayapman" bildirishnomasi bo'lgani uchun faqat bugungi kunga
+  # band qilinadi; boshqa moykalar 14 kun oldindan bron qilinishi mumkin.
+  def parse_date(value, wash)
+    max_date = wash.self_service? ? Date.current : Date.current + 14
     date = Date.parse(value.to_s)
-    date < Date.current ? Date.current : [ date, Date.current + 14 ].min
+    date < Date.current ? Date.current : [ date, max_date ].min
   rescue ArgumentError, TypeError
     Date.current
   end

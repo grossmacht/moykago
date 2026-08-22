@@ -40,12 +40,12 @@
 
 <section class="section" id="bron">
   <div class="container">
-    <h2 class="section__title"><%= t("washes.show.book_title") %></h2>
+    <h2 class="section__title"><%= t(@wash.self_service? ? "washes.show.book_title_self_service" : "washes.show.book_title") %></h2>
     <%= form_with model: @booking, url: bookings_path, class: "book-form" do |f| %>
       <%= f.hidden_field :wash_id, value: @wash.id %>
 
       <fieldset class="book-form__block">
-        <legend><%= t("washes.show.step1") %></legend>
+        <legend><%= t(@wash.self_service? ? "washes.show.step1_self_service" : "washes.show.step1") %></legend>
         <div class="service-list">
           <% @wash.services.order(:price).each do |s| %>
             <label class="service-opt">
@@ -53,26 +53,32 @@
               <% if s.photo.attached? %><%= image_tag s.photo, style: "width:36px;height:36px;border-radius:8px;object-fit:cover" %><% end %>
               <span class="service-opt__body">
                 <span class="service-opt__name"><%= s.name %></span>
-                <span class="service-opt__info"><%= s.duration_minutes %> <%= t("washes.show.minutes") %></span>
+                <span class="service-opt__info">
+                  <%= s.per_minute? ? t("washes.show.recommended_duration", n: s.duration_minutes) : "#{s.duration_minutes} #{t('washes.show.minutes')}" %>
+                </span>
               </span>
-              <span class="service-opt__price"><%= som(s.price) %></span>
+              <span class="service-opt__price"><%= service_price(s) %></span>
             </label>
           <% end %>
         </div>
       </fieldset>
 
       <fieldset class="book-form__block">
-        <legend><%= t("washes.show.step2") %></legend>
-        <div class="date-row">
-          <% (0..6).each do |i| %>
-            <% d = Date.current + i %>
-            <%= link_to wash_path(@wash, date: d, anchor: "bron"),
-                  class: "date-pill #{'date-pill--on' if d == @date}" do %>
-              <span class="date-pill__dow"><%= I18n.t("date.abbr_day_names")[d.wday] %></span>
-              <span class="date-pill__d"><%= d.day %></span>
+        <legend><%= t(@wash.self_service? ? "washes.show.step2_self_service" : "washes.show.step2") %></legend>
+        <% if @wash.self_service? %>
+          <p class="hint"><%= t("washes.show.self_service_note") %></p>
+        <% else %>
+          <div class="date-row">
+            <% (0..6).each do |i| %>
+              <% d = Date.current + i %>
+              <%= link_to wash_path(@wash, date: d, anchor: "bron"),
+                    class: "date-pill #{'date-pill--on' if d == @date}" do %>
+                <span class="date-pill__dow"><%= I18n.t("date.abbr_day_names")[d.wday] %></span>
+                <span class="date-pill__d"><%= d.day %></span>
+              <% end %>
             <% end %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
         <%= f.hidden_field :date, value: @date %>
         <div class="slot-grid">
           <% @wash.slots.each do |slot| %>

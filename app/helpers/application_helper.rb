@@ -4,6 +4,16 @@ module ApplicationHelper
     "#{number_with_delimiter(amount, delimiter: ' ')} #{t('common.currency')}"
   end
 
+  def service_price(service)
+    service.per_minute? ? "#{som(service.price)}/#{t('common.per_minute')}" : som(service.price)
+  end
+
+  def wash_price_from(wash)
+    cheapest = wash.services.min_by(&:price)
+    return nil unless cheapest
+    t("common.price_from", price: service_price(cheapest))
+  end
+
   def droplets(rating, count: nil)
     rating ||= 0
     full = rating.round

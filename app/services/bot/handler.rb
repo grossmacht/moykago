@@ -107,7 +107,8 @@ module Bot
       return send_text(chat_id, "Bu tumanda hozircha moyka yo'q.") if washes.empty?
 
       rows = washes.map { |w|
-        price = w.price_from ? " · #{fmt_som(w.price_from)} dan" : ""
+        cheapest = w.services.min_by(&:price)
+        price = cheapest ? " · #{fmt_service_price(cheapest)} dan" : ""
         [ { text: "#{w.name} · 💧#{w.rating || 'yangi'}#{price}", callback_data: "w:#{w.id}" } ]
       }
       rows << [ { text: "⬅️ Tumanlar", callback_data: "back:d" } ]
@@ -128,7 +129,7 @@ module Bot
       lines << "" << "Xizmatni tanlang:"
 
       rows = wash.services.order(:price).map { |s|
-        [ { text: "#{s.name} — #{fmt_som(s.price)}", callback_data: "s:#{s.id}" } ]
+        [ { text: "#{s.name} — #{fmt_service_price(s)}", callback_data: "s:#{s.id}" } ]
       }
       rows << [ { text: "⬅️ Orqaga", callback_data: "d:#{wash.district}" } ]
       send_text(chat_id, lines.join("\n"), reply_markup: { inline_keyboard: rows })
@@ -139,6 +140,10 @@ module Bot
       return send_text(chat_id, "Xizmat topilmadi.") unless service
 
       session.merge!(wash_id: service.wash_id, service_id: service.id)
+      # SAM boks — oldindan kunni tanlashning hojati yo'q, faqat bugunga
+      # "kelayapman" bildirishnomasi qilinadi.
+      return on_date(chat_id, session, Date.current.iso8601) if service.wash.self_service?
+
       rows = (0..6).map { |i| Date.current + i }.each_slice(2).map { |pair|
         pair.map { |d|
           label = i_label(d)
@@ -163,8 +168,8 @@ module Bot
       rows = free.each_slice(4).map { |slice|
         slice.map { |s| { text: s, callback_data: "sl:#{s}" } }
       }
-      send_text(chat_id, "🕐 #{i_label(date)} — qulay soatni tanlang:",
-        reply_markup: { inline_keyboard: rows })
+      prompt = wash.self_service? ? "🕐 Necha vaqtda kelasiz?" : "🕐 #{i_label(date)} — qulay soatni tanlang:"
+      send_text(chat_id, prompt, reply_markup: { inline_keyboard: rows })
     end
 
     def on_slot(chat_id, session, cb, slot)
@@ -198,7 +203,7 @@ module Bot
           "🎫 Kod: #{b.code}\n" \
           "🚿 #{b.wash.name}\n" \
           "📍 #{b.wash.address}\n" \
-          "🧽 #{b.service.name} — #{fmt_som(b.service.price)}\n" \
+          "🧽 #{b.service.name} — #{fmt_service_price(b.service)}\n" \
           "🕐 #{i_label(b.date)}, soat #{b.slot}\n\n" \
           "To'lov joyida — naqd yoki karta. " \
           "Bronlaringizni «#{BTN_MINE}» bo'limida ko'rasiz.",
@@ -278,6 +283,10 @@ module Bot
 
     def fmt_som(n)
       "#{n.to_s.gsub(/\B(?=(\d{3})+(?!\d))/, ' ')} so'm"
+    end
+
+    def fmt_service_price(service)
+      service.per_minute? ? "#{fmt_som(service.price)}/daqiqa" : fmt_som(service.price)
     end
 
     def i_label(date)

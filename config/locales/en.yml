@@ -2,6 +2,7 @@ en:
   common:
     currency: "UZS"
     price_from: "from %{price}"
+    per_minute: "min"
 
   date:
     month_names:
@@ -76,9 +77,14 @@ en:
       bays: "bays"
       map_open: "open on map"
       book_title: "Book now"
+      book_title_self_service: "Reserve a box"
       step1: "1. Choose a service"
+      step1_self_service: "1. Which function will you use?"
       minutes: "min"
+      recommended_duration: "recommended: %{n} min"
       step2: "2. Date and time"
+      step2_self_service: "2. When will you arrive?"
+      self_service_note: "Self-service box reservations are same-day only. Pay on-site for the minutes you actually use."
       gray_hint: "Grey slots are taken or already past."
       step3: "3. Your details"
       your_name: "Your name"
@@ -166,6 +172,7 @@ en:
           attributes:
             date:
               past_date: "can't be in the past"
+              self_service_future_date: "self-service box reservations are same-day only"
             slot:
               invalid_slot: "invalid time slot"
               slot_past: "this time has already passed"

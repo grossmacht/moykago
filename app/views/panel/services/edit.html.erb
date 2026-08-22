@@ -5,8 +5,11 @@
     <h1>Xizmatni tahrirlash</h1>
     <%= form_with model: @service, url: panel_service_path(@service), class: "login-form", multipart: true do |f| %>
       <label>Nomi <%= f.text_field :name, required: true %></label>
-      <label>Narx (so'm) <%= f.number_field :price, required: true, min: 1000 %></label>
-      <label>Davomiylik (daqiqa) <%= f.number_field :duration_minutes, required: true, min: 5 %></label>
+      <label>Narxlash turi
+        <%= f.select :pricing_unit, [ [ "Belgilangan narx", "fixed" ], [ "Daqiqasiga narx (SAM/avtomat uchun)", "per_minute" ] ] %>
+      </label>
+      <label>Narx (so'm) <%= f.number_field :price, required: true, min: 100 %></label>
+      <label>Davomiylik / tavsiya vaqti (daqiqa) <%= f.number_field :duration_minutes, required: true, min: 5 %></label>
       <% if @service.photo.attached? %>
         <p><%= image_tag @service.photo, style: "height:80px;border-radius:8px" %></p>
       <% end %>
